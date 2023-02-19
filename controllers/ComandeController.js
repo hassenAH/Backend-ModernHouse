@@ -1,29 +1,35 @@
 import Product from"../models/Product.js";
 import Cart from "../models/Cart.js";
+import User from "../models/user.js";
 export async function addOnce (req, res){
     try {
         
-        const product = await Product.findOne({ _id: req.body._id })
-        
+        const product = await Product.findOne({ _id: req.body.idproduct })
+        const user = await User.findOne({ _id: req.body.idUser })
         if (!product) {
           return res.status(404).json({ message: 'Product not found' });
         }
     
-        const cart = await Cart.findOne();
+        const cart = await Cart.findOne({user: [user._id]});
         if (!cart) {
           const newCart = new Cart({
+            user: [user._id],
             products: [product._id],
             quantity: 1,
           });
+          product.quantity--; 
           await newCart.save();
+           
           return res.status(201).json(newCart);
         }
     
         if (cart.products.includes(product._id)) {
-          Cart.quantity++;
-        } 
+          cart.quantity++;
+          product.quantity--;    
+              } 
     
         cart.products.push(product._id);
+        await product.save();
         await cart.save();
         res.json(cart);
       } catch (err) {
