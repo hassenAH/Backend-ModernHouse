@@ -1,11 +1,11 @@
 import express from 'express';
-import multer   from 'multer';
+import multer from '../middlewares/multer-config.js';
 import { addOnce, putOnce, getAll, getOnce, DeletebyId, DeleteAll } from "../controllers/ProductController.js";
 
 const router = express.Router();
 
 router.route("/addproduct")
-  .post(
+  .post(multer,
     addOnce
   );
 

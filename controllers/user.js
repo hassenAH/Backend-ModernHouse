@@ -5,12 +5,25 @@ import sendEmail from "../middlewares/nodemail.js"
 import resetpassword from "../controllers/template/codetemplate.js"
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken'
-
+import otpGenerator from "otp-generator";
+import Cart from '../models/Cart.js';
 export async function getAll(req,res){
     await User
     .find({})
     .then(docs=>{
         res.status(200).json(docs)
+    })
+    .catch(err=>{
+        res.status(500).json({error:err});
+    });
+}
+export async function uploadImage(req,res){
+    await User
+    .findOne({ _id: req.params.id })
+    .then(docs=>{
+        docs.Image=`${req.file.filename}`;
+        docs.save();
+        res.status(200).json(docs);
     })
     .catch(err=>{
         res.status(500).json({error:err});
@@ -118,3 +131,97 @@ export async function deleteOnce(req,res){
      res.status(500).json({error:err});
     });
 }
+export async function resetPass(req,res){
+  
+    var user = await User.findOne({
+      email:req.body.email});
+  
+      if(!user)
+        res.send({
+          msg:'user not found'
+        })
+      
+        var a = otpGenerator.generate(6, { upperCaseAlphabets: false, specialChars: false });
+        user.code = "aaaeaeae";
+        user.save();
+        var message =user.code;
+        const name = user.username;
+      const v = await resetpassword(name,message);
+         sendEmail(user.email, "Reset Password Email", v);
+        
+        res.send({
+          msg:'email sent'
+        })
+        
+      
+      
+      
+  
+  }
+  export async function forgetPass(req,res){
+    try {
+      const user = await User.findOne({ code:req.body.code });
+      if(user)
+      {
+        
+        res.status(200).json("code valide ")
+      }
+      else
+      [
+        res.status(400).json("invalide code ")
+      ]
+      
+     
+     
+  
+      
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  export async function changepass(req,res){
+    try {
+      const user = await User.findOne({ email:req.body.email.toLowerCase() });
+      if(user)
+      {
+        
+        var password=req.body.password;
+        const  encryptedPassword = await bcrypt.hash(password, 10);
+        user.password=encryptedPassword;
+        user.code="";
+        user.save();
+        res.send("password change sucessfully");
+      }
+      
+     
+     
+  
+      
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  export async function FindCommande(req,res){
+
+    var user = await User.findOne({ _id: req.params.id });
+    if(user)
+    {
+      var id = req.params.id
+     
+      var commandes = await Cart.find({user: [user._id]})
+      try{
+  
+      
+      if(commandes)
+      {
+        res.status(200).json(commandes)
+      }else
+      res.status(404).json("user dont have commandes")
+    } catch (error) {
+      console.log(error);
+    }
+    }
+  
+     
+     // res.status(404).json("Not found ")
+  }

@@ -3,7 +3,7 @@ import Product from "../models/Product.js";
 export async function addOnce (req, res) {
 await  Product.create({
     productname: req.body.productname,
-    image: req.body.image,
+    image: `${req.file.filename}`,
       price: req.body.price,
       hor: req.body.hor,
       ver: req.body.ver,
@@ -33,6 +33,7 @@ export async function putOnce(req, res)
     newProduct = {
       productname: req.body.productname,
       price: req.body.price,
+      image: req.body.image,
       hor: req.body.hor,
       ver: req.body.ver,
       surf: req.body.surf,
@@ -43,7 +44,7 @@ export async function putOnce(req, res)
   else {
     newProduct = {
       productname: req.body.productname,
-      image: req.body.image,
+      image:`${req.file.filename}`,
       price: req.body.price,
       hor: req.body.hor,
       ver: req.body.ver,

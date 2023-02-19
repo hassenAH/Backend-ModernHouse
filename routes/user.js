@@ -1,8 +1,8 @@
 import express from 'express';
-import { register, deleteOnce, getAll, getOnce, patchOnce, login } from '../controllers/user.js';
+import { register, deleteOnce, getAll, getOnce, patchOnce, login ,uploadImage,forgetPass,resetPass,changepass,FindCommande} from '../controllers/user.js';
 import { body } from 'express-validator';
 import { checkToken } from '../middlewares/auth.js';
-import multer from 'multer';
+import multer from '../middlewares/multer-config.js';
 const router=express.Router();
 /**
  * @swagger
@@ -175,9 +175,103 @@ router
     .post(register)
     .put(login);
 
-/*router.post('/updateimageUser/:id',multer,uploadImage);*/
+/**
+ * @swagger
+ * /user/resetpwd:
+ *   post:
+ *     summary: send Code reset password
+ *     tags: [User]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/User'
+ *     responses:
+ *       200:
+ *         description: The code  was successfully sent
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/User'
+ *       500:
+ *         description: Some server error
+ */
+ router.post('/resetpwd',resetPass)
+ /**
+ * @swagger
+ * /user/changepwd:
+ *   post:
+ *     summary:  change password
+ *     tags: [User]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/User'
+ *     responses:
+ *       200:
+ *         description: The code  was successfully sent
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/User'
+ *       500:
+ *         description: Some server error
+ */
+  router.post('/changepwd',changepass)
+ /**
+ * @swagger
+ * /user/resetpassword:
+ *   post:
+ *     summary:   validate code for reset
+ *     tags: [User]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/User'
+ *     responses:
+ *       200:
+ *         description: The password update successfully sent
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/User'
+ *       500:
+ *         description: Some server error
+ */
+  router.post('/resetpassword',forgetPass)
+  /**
+ * @swagger
+ * /user/getcommandes/{id}:
+ * 
+ *   post:
+ *     summary: Get all Commande
+ *     tags: [User]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: user id
+ *     responses:
+ *       200:
+ *         description: commandes found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/User'
+ *       500:
+ *         description: Some server error*
+ */
+   router.post('/getcommandes/:id',FindCommande)
 router
     .route('/:id')
+    .post(multer,uploadImage)
     .get(checkToken, getOnce)
     .patch(checkToken, patchOnce)
     .delete(checkToken, deleteOnce);
