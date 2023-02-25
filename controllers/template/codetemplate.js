@@ -118,9 +118,9 @@ const resetpassword = async (name, link) => `
               <div style="border-collapse: collapse;display: table;width: 100%;height: 100%;background-color: transparent;">
                 <!--[if (mso)|(IE)]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding: 0px;background-color: transparent;" align="center"><table cellpadding="0" cellspacing="0" border="0" style="width:600px;"><tr style="background-color: #003399;"><![endif]-->
 
-                <!--[if (mso)|(IE)]><td align="center" width="600" style="background-color: #e1d9c4;width: 600px;padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;" valign="top"><![endif]-->
+                <!--[if (mso)|(IE)]><td align="center" width="600" style="background-color: #7C9473;width: 600px;padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;" valign="top"><![endif]-->
                 <div class="u-col u-col-100" style="max-width: 320px;min-width: 600px;display: table-cell;vertical-align: top;">
-                  <div style="background-color: #e1d9c4;height: 100%;width: 100% !important;">
+                  <div style="background-color: #7C9473;height: 100%;width: 100% !important;">
                     <!--[if (!mso)&(!IE)]><!-->
                     <div style="height: 100%; padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;">
                       <!--<![endif]-->
@@ -152,7 +152,7 @@ const resetpassword = async (name, link) => `
                             <td style="overflow-wrap:break-word;word-break:break-word;padding:10px;font-family:'Cabin',sans-serif;" align="left">
 
                               <div style="color: #e5eaf5; line-height: 140%; text-align: center; word-wrap: break-word;">
-                                <p style="font-size: 14px; line-height: 140%;"><span style="color: #030d45; font-size: 14px; line-height: 19.6px;"><strong>Don't Forget Your password Again</strong></span></p>
+                                <p style="font-size: 14px; line-height: 140%;"><span style="color: #FFFFFF; font-size: 14px; line-height: 19.6px;"><strong>Don't Forget Your password Again</strong></span></p>
                               </div>
 
                             </td>
@@ -166,7 +166,7 @@ const resetpassword = async (name, link) => `
                             <td style="overflow-wrap:break-word;word-break:break-word;padding:0px 10px 31px;font-family:'Cabin',sans-serif;" align="left">
 
                               <div style="color: #e5eaf5; line-height: 140%; text-align: center; word-wrap: break-word;">
-                                <p style="font-size: 14px; line-height: 140%;"><span style="font-size: 28px; line-height: 39.2px; color: #030d45;"><strong><span style="line-height: 39.2px; font-size: 28px;"> </span></strong>
+                                <p style="font-size: 14px; line-height: 140%;"><span style="font-size: 28px; line-height: 39.2px; color: #FFFFFF;"><strong><span style="line-height: 39.2px; font-size: 28px;"> </span></strong>
                                   </span>
                                 </p>
                               </div>
@@ -208,7 +208,7 @@ const resetpassword = async (name, link) => `
 
                               <div style="line-height: 160%; text-align: center; word-wrap: break-word;">
                                 <p style="font-size: 14px; line-height: 160%;"><span style="font-size: 22px; line-height: 35.2px;">Hi,${name} </span></p>
-                                <p style="font-size: 14px; line-height: 160%;"><span style="font-size: 18px; line-height: 28.8px;">This is ur reset Code :${link} </span></p>
+                                <p style="font-size: 14px; line-height: 160%;"><span style="font-size: 18px; line-height: 28.8px;">This is ur reset Code : <h1>${link}</h1> </span></p>
                               </div>
 
                             </td>

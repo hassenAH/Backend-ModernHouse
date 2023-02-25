@@ -28,6 +28,9 @@ const userSchema=new Schema(
         },
         code:{
             type:String
+        },
+        verify:{
+            type:Boolean
         }
 
     },

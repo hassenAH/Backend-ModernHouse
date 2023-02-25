@@ -142,12 +142,12 @@ export async function resetPass(req,res){
         })
       
         var a = otpGenerator.generate(6, { upperCaseAlphabets: false, specialChars: false });
-        user.code = "aaaeaeae";
+        user.code = a;
         user.save();
         var message =user.code;
         const name = user.username;
       const v = await resetpassword(name,message);
-         sendEmail(user.email, "Reset Password Email", v);
+          sendEmail(user.email, "Reset Password Email", v);
         
         res.send({
           msg:'email sent'
