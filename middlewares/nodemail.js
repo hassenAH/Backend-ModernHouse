@@ -7,7 +7,7 @@ const sendEmail = async (email, subject, text) => {
     const transporter = nodemailer.createTransport({
       pool: true,
       host: "smtp.gmail.com",
-      port: 465,
+      port: 587,
       auth: {
         user: "hassen.ahmadi@esprit.tn", // generated ethereal user
         pass: "191JMT0682", // generated ethereal password

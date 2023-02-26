@@ -29,7 +29,7 @@ const userSchema=new Schema(
         code:{
             type:String
         },
-        verify:{
+        verified:{
             type:Boolean
         }
 

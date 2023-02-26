@@ -57,18 +57,22 @@ export async function register(req,res){
         email: req.body.email,
         password: hashedPassword,
         role: "user",
+        verified: false,
     })
     .then(docs=>{
-        var message = `http:// ******//user/verify/${docs.id}`;
-    var name = docs.username;
-    const v =  verifymail(name,message);
-       sendEmail(docs.email, "Verify Email", v);
+        
       
         res.status(200).json({message: 'User Added Successfully!', docs});
     })
     .catch(err=>{
         res.status(500).json({error:err});
     });
+    const u = await User.findOne({
+      email:req.body.email});
+    var message = `${u.id}`;
+    var name =  u.username;
+    var v = await verifymail(name,message);
+        sendEmail( u.email, "Verify Email", v);
     
 }
 
@@ -225,3 +229,17 @@ export async function resetPass(req,res){
      
      // res.status(404).json("Not found ")
   }
+  export async function verify(req,res){
+    try {
+      var user = await User.findOne({ _id: req.params.id });
+      user.verified = true;
+      user.save();
+     
+     
+  
+      res.send("email verified sucessfully");
+    } catch (error) {
+      console.log("prob");
+    }
+  }
+  

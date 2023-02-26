@@ -1,5 +1,5 @@
 import express from 'express';
-import { register, deleteOnce, getAll, getOnce, patchOnce, login ,uploadImage,forgetPass,resetPass,changepass,FindCommande} from '../controllers/user.js';
+import { register, deleteOnce, getAll, getOnce, verify,patchOnce, login ,uploadImage,forgetPass,resetPass,changepass,FindCommande} from '../controllers/user.js';
 import { body } from 'express-validator';
 import { checkToken } from '../middlewares/auth.js';
 import multer from '../middlewares/multer-config.js';
@@ -275,5 +275,29 @@ router
     .get(checkToken, getOnce)
     .patch(checkToken, patchOnce)
     .delete(checkToken, deleteOnce);
+/**
+ * @swagger
+ * /user/verify/{id}:
+ *   get:
+ *     summary: verify a user  by id
+ *     tags: [User]
+ *     parameters:
+ *       - in : path
+ *         name: id
+ *         description: id of id
+ *         schema:
+ *           type: string
+ *         required: true
+ *     responses:
+ *       200:
+ *         description: verified by  id
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/User'
+ *       400:
+ *         description: User can not be found
+ */
+ router.get('/verify/:id',verify);
 
 export default router;
