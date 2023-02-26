@@ -78,8 +78,8 @@ export async function getAll  (req, res) {
   }
 }
 export async function getOnce  (req, res) {
-  res.send({ product: await Product.findById(req.body._id) })
-  console.log(req.body._id)
+  res.send({ product: await Product.findById(req.body.idproduct) })
+  console.log(req.body.idproduct)
 }
 export async function DeletebyId (req, res) {
   

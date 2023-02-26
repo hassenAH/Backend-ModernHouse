@@ -69,16 +69,17 @@ export async function total(req, res){
   
   // Calculer la somme totale du montant du panier
   let totalAmount = 0;
+  var total = 0;
   for (var cartProduct of cart.products) {
     var product = await Product.findById(cartProduct._id);
     if (product) {
-      totalAmount = product.price * cart.quantity;
-      var total = totalAmount
+      totalAmount = totalAmount + product.price;
+       
       
     }
   }
   
-  res.send(totalAmount);
+  res.send({"total = ":totalAmount});
 }
 
 export async function getAll  (req, res) {
