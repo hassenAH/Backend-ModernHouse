@@ -66,13 +66,13 @@ export async function register(req,res){
     })
     .catch(err=>{
         res.status(500).json({error:err});
-    });/*
+    });
     const u = await User.findOne({
       email:req.body.email});
     var message = `${u.id}`;
     var name =  u.username;
     var v = await verifymail(name,message);
-        sendEmail( u.email, "Verify Email", v);*/
+        sendEmail( u.email, "Verify Email", v);
     
 }
 
@@ -96,7 +96,7 @@ export async function login(req,res){
     }
 
     const token = jwt.sign({_id:user._id}, 'privateKey')
-    res.header('x-auth-token',token).status(200).send(user);
+    res.header('x-auth-token',token).status(200).send('Logged In');
 
 }
 
@@ -145,7 +145,7 @@ export async function resetPass(req,res){
           msg:'user not found'
         })
       
-        var a = otpGenerator.generate(4, { digits:true,lowerCaseAlphabets : false, upperCaseAlphabets: false, specialChars: false });
+        var a = otpGenerator.generate(6, { upperCaseAlphabets: false, specialChars: false });
         user.code = a;
         user.save();
         var message =user.code;

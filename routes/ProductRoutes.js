@@ -1,12 +1,21 @@
 import express from 'express';
 import multer from '../middlewares/multer-config.js';
-import { addOnce, putOnce, getAll, getOnce, DeletebyId, DeleteAll } from "../controllers/ProductController.js";
+import { addOnce, putOnce, getAll, getOnce, DeletebyId, DeleteAll, addWish, deletewish, getwishList, getwishbyid } from "../controllers/ProductController.js";
 
 const router = express.Router();
 
 router.route("/addproduct")
   .post(multer,
     addOnce
+  );
+
+  router.route("/addwish")
+  .post(
+    addWish
+  );
+  router.route("/deletewish")
+  .delete(
+    deletewish
   );
 
 router.route("/update/:id")
@@ -19,4 +28,11 @@ router.route("/update/:id")
   router.route("/getall")
     .get(getAll);
     
+  router.route("/getwishlists")
+    .get(getwishList);
+
+    router.route("/getwishid")
+    .get(
+      getwishbyid
+    ); 
 export default router;

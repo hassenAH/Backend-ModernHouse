@@ -4,6 +4,7 @@ const ProductSchema = new Schema(
   {
     productname: { type: String },
     image: { type: String },
+    description: { type: String },
     price: {type : Number},
     hor: {type : Number},
     ver: { type: Number },
