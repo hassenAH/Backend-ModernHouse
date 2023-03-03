@@ -10,7 +10,9 @@ await  Product.create({
       ver: req.body.ver,
       surf: req.body.surf,
       quantity: req.body.quantity,
-      description: req.body.description
+      description: req.body.description,
+      category: req.body.category
+
       
   })
     .then((newProduct) => {
@@ -22,7 +24,8 @@ await  Product.create({
       ver: newProduct.ver,
       surf: newProduct.surf,
       quantity: newProduct.quantity,
-      description: newProduct.description
+      description: newProduct.description,
+      category: newProduct.category
       });
     })
     .catch((err) => {
@@ -41,7 +44,8 @@ export async function putOnce(req, res)
       ver: req.body.ver,
       surf: req.body.surf,
       quantity: req.body.quantity,
-      description: req.body.description
+      description: req.body.description,
+      category: req.body.category
 
     }
   }
@@ -54,9 +58,8 @@ export async function putOnce(req, res)
       ver: req.body.ver,
       surf: req.body.surf,
       quantity: req.body.quantity,
-      description: req.body.description
-
-      
+      description: req.body.description,
+      category: req.body.category
     }
   }
   
@@ -174,4 +177,83 @@ export async function getwishbyid (req, res) {
   } catch (err) {
     res.status(500).json({ error: err });
   }
+}
+export async function deletewish(req, res){
+
+  const wish = await Wish.findById({ _id: req.body._id });
+  if (!wish) {
+    return res.status(404).send('Wish List not found');
+  }
+  const wishProductIndex = wish.products.findIndex(p => p.productId == req.params.productId);
+  if (wishProductIndex === -1) {
+    return res.status(404).send('Product not found in wishList');
+  }
+  
+  // Supprimer le produit du panier
+  
+  
+  wish.products.splice(wishProductIndex, 1);
+  
+  
+  // Enregistrer les modifications du panier
+  await wish.save();
+  
+  res.send('Product removed from WishList');
+
+}
+export async function getwishList  (req, res) {
+  try {
+    const wishs = await Wish.find({});
+    res.status(200).json(wishs);
+  } catch (err) {
+    res.status(500).json({ error: err });
+  }
+}
+
+export async function getwishbyid (req, res) {
+  try {
+    const wish = await Wish.findOne({ _id: req.user.idUser });
+    res.status(200).json(wish);
+  } catch (err) {
+    res.status(500).json({ error: err });
+  }
+}
+
+export async function getProductsByCategory(req, res) {
+  const category = req.body.category;
+
+  try {
+    const products = await Product.find({ category: category });
+    res.status(200).json(products);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Server Error" });
+  }
+}
+export async function sortbyalpha(req , res) {
+  try {
+  const products = await Product.find().sort({ productname: 'asc' });
+  res.status(200).json(products);
+} catch (error) {
+  console.error(error);
+  res.status(500).json({ message: "Server Error" });
+}
+}
+export async function sortpriceasc(req , res) {
+  try {
+  const products = await Product.find().sort({ price: 1 });
+  res.status(200).json(products);
+} catch (error) {
+  console.error(error);
+  res.status(500).json({ message: "Server Error" });
+}
+}
+export async function sortpriceades(req , res) {
+  try {
+  const products = await Product.find().sort({ price: -1 });
+  res.status(200).json(products);
+} catch (error) {
+  console.error(error);
+  res.status(500).json({ message: "Server Error" });
+}
 }

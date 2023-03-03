@@ -10,6 +10,13 @@ const ProductSchema = new Schema(
     ver: { type: Number },
     surf: { type: Number },
     quantity: { type: Number },
+    category: {
+      type: String,
+      enum: {
+        values: ['bathroom', 'door', 'electrical','flooring','interior design',
+        'kitchen','lighting','mansory','paint','plumbing','siding']
+      }
+    },
   },
   {
     timestamps: { currentTime: () => Date.now() },
