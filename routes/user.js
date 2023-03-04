@@ -268,12 +268,12 @@ router
  *       500:
  *         description: Some server error*
  */
-   router.post('/getcommandes/:id',FindCommande)
+   router.get('/getcommandes/:id',FindCommande)
 router
     .route('/:id')
     .post(multer,uploadImage)
     .get(checkToken, getOnce)
-    .patch(checkToken, patchOnce)
+    .patch(patchOnce)
     .delete(checkToken, deleteOnce);
 /**
  * @swagger

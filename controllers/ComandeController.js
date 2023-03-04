@@ -48,15 +48,15 @@ export async function deleteone(req, res){
   }
   
   // Supprimer le produit du panier
-  const cartProduct = Cart.products[cartProductIndex];
+  const cartProduct = cart.products[cartProductIndex];
   if (cartProduct.quantity > 1) {
-    Cart.quantity--;
+    cart.quantity--;
   } else {
-    Cart.products.splice(cartProductIndex, 1);
+    cart.products.splice(cartProductIndex, 1);
   }
   
   // Enregistrer les modifications du panier
-  await Cart.save();
+  await cart.save();
   
   res.send('Product removed from cart');
 

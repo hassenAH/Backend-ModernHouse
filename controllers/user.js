@@ -66,13 +66,13 @@ export async function register(req,res){
     })
     .catch(err=>{
         res.status(500).json({error:err});
-    });/*
+    });
     const u = await User.findOne({
       email:req.body.email});
     var message = `${u.id}`;
     var name =  u.username;
     var v = await verifymail(name,message);
-        sendEmail( u.email, "Verify Email", v);*/
+        sendEmail( u.email, "Verify Email", v);
     
 }
 
@@ -189,6 +189,7 @@ export async function resetPass(req,res){
       if(user)
       {
         
+
         var password=req.body.password;
         const  encryptedPassword = await bcrypt.hash(password, 10);
         user.password=encryptedPassword;
