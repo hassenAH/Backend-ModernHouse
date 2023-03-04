@@ -7,7 +7,7 @@ import swaggerJSDoc from 'swagger-jsdoc'
 import swaggerUi from 'swagger-ui-express'
 import userRoutes from './routes/user.js';
 import cart from './routes/ComandeRoutes.js';
-
+import WishList from './routes/WishlistRoute.js';
 import product from './routes/ProductRoutes.js';
 
 const options ={
@@ -58,7 +58,7 @@ app.use('/api-docs',swaggerUi.serve,swaggerUi.setup(swaggerSpec))
 app.use('/user',userRoutes);
 app.use('/commande',cart);
 app.use('/produit',product);
-
+app.use('/wishlist',WishList);
 
 
 app.use(notFoundError);
