@@ -1,5 +1,5 @@
 import express from 'express';
-import { register, deleteOnce, getAll, getOnce, verify,patchOnce, login ,uploadImage,forgetPass,resetPass,changepass,FindCommande} from '../controllers/user.js';
+import { register, deleteOnce, getAll,registerFourniseur, getOnce, verify,patchOnce, login ,uploadImage,forgetPass,resetPass,changepass,FindCommande} from '../controllers/user.js';
 import { body } from 'express-validator';
 import { checkToken } from '../middlewares/auth.js';
 import multer from '../middlewares/multer-config.js';
@@ -31,6 +31,12 @@ const router=express.Router();
  *         username: hassenah
  *         email: hassenahmadi@ymail.com
  *         password: aaa
+ *         first_name: hassen
+ *         last_name: ahmadi
+ *         code_fiscal: 00012358
+ *         categorie: plomberie
+ * 
+ *         
  *         
  *
  */
@@ -61,6 +67,28 @@ const router=express.Router();
  * /user:
  *   post:
  *     summary: Create a new User
+ *     tags: [User]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/User'
+ *     responses:
+ *       200:
+ *         description: The created User.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/User'
+ *       500:
+ *         description: Some server error'
+ */
+ /**
+ * @swagger
+ * /user/fournisseur:
+ *   post:
+ *     summary: Create a new fournisseur
  *     tags: [User]
  *     requestBody:
  *       required: true
@@ -174,7 +202,7 @@ router
     .get(getAll)
     .post(register)
     .put(login);
-
+router.post('/fournisseur',registerFourniseur);
 /**
  * @swagger
  * /user/resetpwd:

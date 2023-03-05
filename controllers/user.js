@@ -57,7 +57,9 @@ export async function register(req,res){
         email: req.body.email,
         password: hashedPassword,
         role: "user",
+        Image:"",
         verified: false,
+        banned:false,
     })
     .then(docs=>{
         
@@ -243,4 +245,50 @@ export async function resetPass(req,res){
       console.log("prob");
     }
   }
-  
+  export async function registerFourniseur(req,res){
+   
+
+   
+
+    let user = await User.findOne({email: req.body.email})
+
+    if(user)
+    {
+        return res.status(404).send('Email already exists')
+    }
+
+    const hashedPassword = await bcrypt.hash(req.body.password, 10)
+
+    await User
+    .create({
+        username: req.body.username,
+        email: req.body.email,
+        password: hashedPassword,
+        role: "Fournisseur",
+        Image:"",
+        verified: false,
+        banned:false,
+        first_name: req.body.first_name,
+        last_name: req.body.last_name,
+        company_name: req.body.company_name,
+        code_fiscal: req.body.code_fiscal,
+        telephone_number:  req.body.telephone_number,
+        categorie:  req.body.categorie
+
+    })
+    .then(docs=>{
+        
+      
+        res.status(200).json({message: 'User Added Successfully!', docs});
+    })
+    .catch(err=>{
+        res.status(500).json({error:err});
+    });
+    const u = await User.findOne({
+      email:req.body.email});
+    var message = `${u.id}`;
+    var name =  u.last_name +" "+u.first_name ;
+    var v = await verifymail(name,message);
+        sendEmail( u.email, "Verify Email", v);
+    
+}

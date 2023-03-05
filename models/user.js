@@ -31,7 +31,30 @@ const userSchema=new Schema(
         },
         verified:{
             type:Boolean
-        }
+        },
+        banned:{
+            type:Boolean
+        },
+        company_name:{
+            type:String
+        },
+        first_name:{
+            type:String
+        },
+        last_name:{
+            type:String
+        },
+        code_fiscal:{
+            type:String
+        },
+        telephone_number:{
+            type:String
+        },
+        categorie:{
+            type:String
+        },
+
+
 
     },
 
