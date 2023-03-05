@@ -122,4 +122,30 @@ export async function DeleteAll  (req, res) {
   
 }
 
+export async function getProductsByCategory(req, res) {
+  const category = req.body.category;
 
+  try {
+    const products = await Product.find({ category: category });
+    res.status(200).json(products);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Server Error" });
+  }
+}
+export async function sortbyalpha(req, res) {
+  const products = await Product.find().sort({ productname: 'asc' });
+  res.status(200).json(products);
+  
+}
+export async function sortbypriceasc(req, res) {
+  const products = await Product.find({}).sort({ price: 1 });
+  res.status(200).json(products);
+  
+}
+
+export async function sortbypricedes(req, res) {
+  const products = await Product.find({}).sort({ price: -1 });
+  res.status(200).json(products);
+  
+}
