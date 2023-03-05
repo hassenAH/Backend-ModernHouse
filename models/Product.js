@@ -9,6 +9,11 @@ const ProductSchema = new Schema(
     ver: { type: Number },
     surf: { type: Number },
     quantity: { type: Number },
+    category : { type: String,
+      enum: {
+        values: ['seramic', 'flooring','electrical','kitchen','lighting','masonry','paints','walls'],
+        message: '{VALUE} is not supported'
+      } },
   },
   {
     timestamps: { currentTime: () => Date.now() },

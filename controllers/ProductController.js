@@ -9,6 +9,7 @@ await  Product.create({
       ver: req.body.ver,
       surf: req.body.surf,
       quantity: req.body.quantity,
+      category: req.body.category,
       
   })
     .then((newProduct) => {
@@ -19,7 +20,8 @@ await  Product.create({
       hor: newProduct.hor,
       ver: newProduct.ver,
       surf: newProduct.surf,
-      quantity: req.body.quantity,
+      quantity: newProduct.quantity,
+      category: newProduct.category,
       });
     })
     .catch((err) => {
@@ -37,7 +39,8 @@ export async function putOnce(req, res)
       hor: req.body.hor,
       ver: req.body.ver,
       surf: req.body.surf,
-      quantity: req.body.quantity
+      quantity: req.body.quantity,
+      category: req.body.category
 
     }
   }
@@ -50,6 +53,7 @@ export async function putOnce(req, res)
       ver: req.body.ver,
       surf: req.body.surf,
       quantity: req.body.quantity,
+      category: req.body.category
 
       
     }
