@@ -10,6 +10,8 @@ await  Product.create({
       surf: req.body.surf,
       quantity: req.body.quantity,
       category: req.body.category,
+      description: req.body.description,
+
       
   })
     .then((newProduct) => {
@@ -22,6 +24,7 @@ await  Product.create({
       surf: newProduct.surf,
       quantity: newProduct.quantity,
       category: newProduct.category,
+      description: newProduct.description,
       });
     })
     .catch((err) => {
@@ -40,9 +43,9 @@ export async function putOnce(req, res)
       ver: req.body.ver,
       surf: req.body.surf,
       quantity: req.body.quantity,
-      category: req.body.category
-
-    }
+      category: req.body.category,
+      description: req.body.description
+        }
   }
   else {
     newProduct = {
@@ -53,7 +56,8 @@ export async function putOnce(req, res)
       ver: req.body.ver,
       surf: req.body.surf,
       quantity: req.body.quantity,
-      category: req.body.category
+      category: req.body.category,
+      description: req.body.description
 
       
     }
