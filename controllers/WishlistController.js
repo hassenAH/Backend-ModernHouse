@@ -34,29 +34,29 @@ export async function addWish (req, res) {
     res.status(500).json({ error: err });
   }
 }
+
 export async function deletewish(req, res){
+  const { userId, productId } = req.body;
 
-  const wish = await Wish.findById({ _id: req.body._id });
-  if (!wish) {
-    return res.status(404).send('Wish List not found');
+  
+  const wishList = await Wish.findOne({ userId }).populate('products');
+  if (!wishList) {
+    return res.status(404).send('Wishlist not found');
   }
-  const wishProductIndex = wish.products.findIndex(p => p.productId == req.params.productId);
-  if (wishProductIndex === -1) {
-    return res.status(404).send('Product not found in wishList');
-  }
-  
-  // Supprimer le produit du panier
-  
-  
-  wish.products.splice(wishProductIndex, 1);
-  
-  
-  // Enregistrer les modifications du panier
-  await wish.save();
-  
-  res.send('Product removed from WishList');
+  const productIndex = wishList.products.findIndex(p => p._id == req.body.productId);
 
+  if (productIndex === -1) {
+    return res.status(404).send('Product not found in wishlist');
+  }
+  
+    wishList.products.splice(productIndex, 1);
+  await wishList.save();
+
+  return res.send({ message: "Product has been deleted" });
+  
+  
 }
+
 export async function getwishList  (req, res) {
   try {
     const wishs = await Wish.find({});

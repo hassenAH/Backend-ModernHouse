@@ -1,6 +1,8 @@
 import Product from "../models/Product.js";
-
+import ProductPanel from "../models/ProductPanel.js";
+import User from "../models/user.js";
 export async function addOnce (req, res) {
+const user = await User.findOne({ _id: req.body.idUser })
 await  Product.create({
     productname: req.body.productname,
     image: `${req.file.filename}`,
@@ -11,6 +13,7 @@ await  Product.create({
       quantity: req.body.quantity,
       category: req.body.category,
       description: req.body.description,
+      user: req.body.user
 
       
   })
@@ -25,12 +28,25 @@ await  Product.create({
       quantity: newProduct.quantity,
       category: newProduct.category,
       description: newProduct.description,
+      user: newProduct.user
       });
     })
     .catch((err) => {
       res.status(500).json({ error: err });
     });
 }
+export async function getProductsByUserId(req, res) {
+  try {
+    const products = await Product.find({ user: req.body.user});
+    console.log(`Products: ${products}`);
+    res.status(200).json(products);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Server error' });
+  }
+}
+
+
 export async function putOnce(req, res)
  {
   let newProduct = {};
