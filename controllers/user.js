@@ -245,6 +245,19 @@ export async function resetPass(req,res){
       console.log("prob");
     }
   }
+  export async function ban(req,res){
+    try {
+      var user = await User.findOne({ _id: req.params.id });
+      user.banned = true;
+      user.save();
+     
+     
+  
+      res.send("user banned sucessfully");
+    } catch (error) {
+      console.log("prob");
+    }
+  }
   export async function registerFourniseur(req,res){
    
 
