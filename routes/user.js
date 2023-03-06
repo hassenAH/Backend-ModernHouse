@@ -1,5 +1,5 @@
 import express from 'express';
-import { register, deleteOnce, ban,getAll,registerFourniseur, getOnce, verify,patchOnce, login ,uploadImage,forgetPass,resetPass,changepass,FindCommande} from '../controllers/user.js';
+import { register,somme,unban, deleteOnce, ban,getAll,registerFourniseur, getOnce, verify,patchOnce, login ,uploadImage,forgetPass,resetPass,changepass,FindCommande} from '../controllers/user.js';
 import { body } from 'express-validator';
 import { checkToken } from '../middlewares/auth.js';
 import multer from '../middlewares/multer-config.js';
@@ -31,9 +31,11 @@ const router=express.Router();
  *         username: hassenah
  *         email: hassenahmadi@ymail.com
  *         password: aaa
+ *         company_name: modernhouse
  *         first_name: hassen
  *         last_name: ahmadi
  *         code_fiscal: 00012358
+ *         telephone_number: 28727188
  *         categorie: plomberie
  * 
  *         
@@ -350,6 +352,32 @@ router
  *       400:
  *         description: User can not be found
  */
-  router.get('/ban/:id',ban);
+  router.get('/unban/:id',ban);
+  /**
+ * @swagger
+ * /user/ban/{id}:
+ *   get:
+ *     summary: ban a user  by id
+ *     tags: [User]
+ *     parameters:
+ *       - in : path
+ *         name: id
+ *         description: id of id
+ *         schema:
+ *           type: string
+ *         required: true
+ *     responses:
+ *       200:
+ *         description: ban by  id
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/User'
+ *       400:
+ *         description: User can not be found
+ */
+   router.get('/unban/:id',ban);
+  
+ 
 
 export default router;

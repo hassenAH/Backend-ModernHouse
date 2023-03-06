@@ -17,6 +17,16 @@ export async function getAll(req,res){
         res.status(500).json({error:err});
     });
 }
+export async function somme(req,res){
+  await User
+  .find({})
+  .then(docs=>{
+      res.status(200).json(docs)
+  })
+  .catch(err=>{
+      res.status(500).json({error:err});
+  });
+}
 export async function uploadImage(req,res){
     await User
     .findOne({ _id: req.params.id })
@@ -258,6 +268,20 @@ export async function resetPass(req,res){
       console.log("prob");
     }
   }
+  
+  export async function unban(req,res){
+    try {
+      var user = await User.findOne({ _id: req.params.id });
+      user.banned = false;
+      user.save();
+     
+     
+  
+      res.send("user banned sucessfully");
+    } catch (error) {
+      console.log("prob");
+    }
+  }
   export async function registerFourniseur(req,res){
    
 
@@ -274,7 +298,6 @@ export async function resetPass(req,res){
 
     await User
     .create({
-        username: req.body.username,
         email: req.body.email,
         password: hashedPassword,
         role: "Fournisseur",
@@ -290,18 +313,16 @@ export async function resetPass(req,res){
 
     })
     .then(docs=>{
-        
-      
         res.status(200).json({message: 'User Added Successfully!', docs});
     })
     .catch(err=>{
         res.status(500).json({error:err});
     });
-    const u = await User.findOne({
+   /* const u = await User.findOne({
       email:req.body.email});
     var message = `${u.id}`;
     var name =  u.last_name +" "+u.first_name ;
     var v = await verifymail(name,message);
-        sendEmail( u.email, "Verify Email", v);
+        sendEmail( u.email, "Verify Email", v);*/
     
 }
