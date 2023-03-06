@@ -1,6 +1,8 @@
 import Product from "../models/Product.js";
-
+import ProductPanel from "../models/ProductPanel.js";
+import User from "../models/user.js";
 export async function addOnce (req, res) {
+const user = await User.findOne({ _id: req.body.idUser })
 await  Product.create({
     productname: req.body.productname,
     image: `${req.file.filename}`,
@@ -9,6 +11,10 @@ await  Product.create({
       ver: req.body.ver,
       surf: req.body.surf,
       quantity: req.body.quantity,
+      category: req.body.category,
+      description: req.body.description,
+      user: req.body.user
+
       
   })
     .then((newProduct) => {
@@ -19,13 +25,28 @@ await  Product.create({
       hor: newProduct.hor,
       ver: newProduct.ver,
       surf: newProduct.surf,
-      quantity: req.body.quantity,
+      quantity: newProduct.quantity,
+      category: newProduct.category,
+      description: newProduct.description,
+      user: newProduct.user
       });
     })
     .catch((err) => {
       res.status(500).json({ error: err });
     });
 }
+export async function getProductsByUserId(req, res) {
+  try {
+    const products = await Product.find({ user: req.body.user});
+    console.log(`Products: ${products}`);
+    res.status(200).json(products);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Server error' });
+  }
+}
+
+
 export async function putOnce(req, res)
  {
   let newProduct = {};
@@ -37,9 +58,10 @@ export async function putOnce(req, res)
       hor: req.body.hor,
       ver: req.body.ver,
       surf: req.body.surf,
-      quantity: req.body.quantity
-
-    }
+      quantity: req.body.quantity,
+      category: req.body.category,
+      description: req.body.description
+        }
   }
   else {
     newProduct = {
@@ -50,6 +72,8 @@ export async function putOnce(req, res)
       ver: req.body.ver,
       surf: req.body.surf,
       quantity: req.body.quantity,
+      category: req.body.category,
+      description: req.body.description
 
       
     }
@@ -98,4 +122,30 @@ export async function DeleteAll  (req, res) {
   
 }
 
+export async function getProductsByCategory(req, res) {
+  const category = req.body.category;
 
+  try {
+    const products = await Product.find({ category: category });
+    res.status(200).json(products);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Server Error" });
+  }
+}
+export async function sortbyalpha(req, res) {
+  const products = await Product.find().sort({ productname: 'asc' });
+  res.status(200).json(products);
+  
+}
+export async function sortbypriceasc(req, res) {
+  const products = await Product.find({}).sort({ price: 1 });
+  res.status(200).json(products);
+  
+}
+
+export async function sortbypricedes(req, res) {
+  const products = await Product.find({}).sort({ price: -1 });
+  res.status(200).json(products);
+  
+}
