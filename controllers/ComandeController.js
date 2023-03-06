@@ -102,6 +102,10 @@ export async function DeletebyId (req, res) {
 
 }
 export async function getbyid (req, res) {
-  res.send({ cart: await Cart.findById(req.body._id) })
-  console.log(req.body._id)
+  try {
+    const cart = await Cart.findOne({ user: req.body.idUser  }).populate("products");
+    res.status(200).json(cart);
+  } catch (err) {
+    res.status(500).json({ error: err });
+  }
 }
