@@ -9,6 +9,7 @@ import userRoutes from './routes/user.js';
 import cart from './routes/ComandeRoutes.js';
 import WishList from './routes/WishlistRoute.js';
 import product from './routes/ProductRoutes.js';
+import PaymentRoutes from './routes/PaymentRoutes.js';
 
 const options ={
   definition: {
@@ -56,6 +57,7 @@ app.use("/img",express.static("public/images"));
 app.use('/api-docs',swaggerUi.serve,swaggerUi.setup(swaggerSpec))
 
 app.use('/user',userRoutes);
+app.use('/payment',PaymentRoutes);
 app.use('/commande',cart);
 app.use('/produit',product);
 app.use('/wishlist',WishList);
@@ -67,5 +69,10 @@ app.use(errorHandler);
 app.listen(port, () => {
     console.log(`Server running at http://localhost:${port}/`);
   });
-  
 
+
+process.on('TypeError:', (reason, promise) => {
+  console.log('TypeError at:', reason.stack || reason)
+  // Recommended: send the information to sentry.io
+  // or whatever crash reporting service you use
+})
