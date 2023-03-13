@@ -1,4 +1,5 @@
 import Stripe from 'stripe';
+import fetch from "cross-fetch";
 const stripePublishableKey = process.env.STRIPE_PUBLISHABLE_KEY || '1';
 const stripeSecretKey = process.env.STRIPE_SECRET_KEY || '2';
 const stripeWebhookSecret = process.env.STRIPE_WEBHOOK_SECRET || '3';
