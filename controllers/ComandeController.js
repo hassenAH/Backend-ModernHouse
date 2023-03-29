@@ -1,9 +1,10 @@
 import Product from"../models/Product.js";
 import Cart from "../models/Cart.js";
 import User from "../models/user.js";
+
 export async function addOnce (req, res){
-    try {
-        
+  let date_ob = new Date()
+      try {
         const product = await Product.findOne({ _id: req.body.idproduct })
         const user = await User.findOne({ _id: req.body.idUser })
         if (!product) {
@@ -16,6 +17,8 @@ export async function addOnce (req, res){
             user: [user._id],
             products: [product._id],
             quantity: 1,
+            etat: "Order",
+            date: date_ob.toISOString().slice(0,10)
           });
           product.quantity--; 
           await newCart.save();
@@ -102,6 +105,26 @@ export async function DeletebyId (req, res) {
 
 }
 export async function getbyid (req, res) {
+<<<<<<< Updated upstream
   res.send({ cart: await Cart.findById(req.body._id) })
   console.log(req.body._id)
+=======
+  try {
+    const cart = await Cart.findOne({ user: req.body.idUser  }).populate("products");
+    res.status(200).json(cart);
+  } catch (err) {
+    res.status(500).json({ error: err });
+  }
+}
+
+export async function changeetat(req,res){
+  try {
+    const cart = await Cart.findById(req.body._id)
+      cart.etat =req.body.etat;
+      cart.save();
+      res.send("etat change sucessfully");
+  } catch (error) {
+    console.log(error);
+  }
+>>>>>>> Stashed changes
 }
