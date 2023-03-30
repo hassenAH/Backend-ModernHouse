@@ -6,11 +6,11 @@ import { addOnce, putOnce, getAll, getOnce, DeletebyId, DeleteAll, getProductsBy
 const router = express.Router();
 
 router.route("/addproduct")
-  .post(multer,
+  .post(
     addOnce
   );
 router.route("/getuserproduct")
-  .post(multer,
+  .post(
     getProductsByUserId
   );
 

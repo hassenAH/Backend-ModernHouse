@@ -5,7 +5,7 @@ export async function addOnce (req, res) {
 const user = await User.findOne({ _id: req.body.idUser })
 await  Product.create({
     productname: req.body.productname,
-    image: `${req.file.filename}`,
+   /* image: `${req.file.filename}`,*/
       price: req.body.price,
       hor: req.body.hor,
       ver: req.body.ver,

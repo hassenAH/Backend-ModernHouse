@@ -301,7 +301,7 @@ export async function resetPass(req,res){
         email: req.body.email,
         password: hashedPassword,
         role: "Fournisseur",
-        Image:"",
+        Image:"any.jpg",
         verified: false,
         banned:false,
         first_name: req.body.first_name,
@@ -318,11 +318,11 @@ export async function resetPass(req,res){
     .catch(err=>{
         res.status(500).json({error:err});
     });
-   /* const u = await User.findOne({
+    const u = await User.findOne({
       email:req.body.email});
     var message = `${u.id}`;
     var name =  u.last_name +" "+u.first_name ;
     var v = await verifymail(name,message);
-        sendEmail( u.email, "Verify Email", v);*/
+        sendEmail( u.email, "Verify Email", v);
     
 }
