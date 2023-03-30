@@ -1,9 +1,10 @@
 import Product from"../models/Product.js";
 import Cart from "../models/Cart.js";
 import User from "../models/user.js";
+
 export async function addOnce (req, res){
-    try {
-        
+  let date_ob = new Date()
+      try {
         const product = await Product.findOne({ _id: req.body.idproduct })
         const user = await User.findOne({ _id: req.body.idUser })
         if (!product) {
@@ -16,6 +17,8 @@ export async function addOnce (req, res){
             user: [user._id],
             products: [product._id],
             quantity: 1,
+            etat: "Order",
+            date: date_ob.toISOString().slice(0,10)
           });
           product.quantity--; 
           await newCart.save();
@@ -84,7 +87,7 @@ export async function total(req, res){
 
 export async function getAll  (req, res) {
   try {
-    const carts = await Cart.find({});
+    const carts = await Cart.find({}).populate("user");;
     res.status(200).json(carts);
   } catch (err) {
     res.status(500).json({ error: err });

@@ -21,7 +21,7 @@ router.route("/deleteProduct")
     total
   ); 
   router.route("/getall")
-  .get(
+  .post(
     getAll
   );
    router.route("/getid")
