@@ -123,7 +123,40 @@ export async function getOnce(req,res){
         res.status(500).json({error:err});
     });
 }
-
+export async function countLastWeekUsers(req,res) {
+  
+    const lastWeekDate = new Date();
+    lastWeekDate.setDate(lastWeekDate.getDate() - 7);
+    const result = await User.aggregate([
+      {
+        $match: {
+          createdAt: {
+            $gte: lastWeekDate
+          }
+        }
+      },
+      {
+        $group: {
+          _id: null,
+          count: {
+            $sum: 1
+          }
+        }
+      }
+    ]).toArray().then(docs =>{
+      const count = docs.length > 0 ? docs[0].count : 0;
+      res.status(200).json(`Number of users registered in the last week: ${count}`);
+  })
+  .catch(err=>{
+      res.status(500).json({error:err});
+  });
+  
+    
+   
+  
+  
+  
+}
 export async function patchOnce(req,res){
 
     await User
@@ -277,7 +310,7 @@ export async function resetPass(req,res){
      
      
   
-      res.send("user banned sucessfully");
+      res.send("user unbanned sucessfully");
     } catch (error) {
       console.log("prob");
     }
@@ -300,7 +333,7 @@ export async function resetPass(req,res){
     .create({
         email: req.body.email,
         password: hashedPassword,
-        role: "Fournisseur",
+        role: "Supplier",
         Image:"any.jpg",
         verified: false,
         banned:false,
