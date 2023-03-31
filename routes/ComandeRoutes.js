@@ -1,6 +1,6 @@
 import express from 'express';
 import multer   from 'multer';
-import { addOnce, deleteone, getAll, DeletebyId,total,getbyid  }from "../controllers/ComandeController.js";
+import { addOnce, deleteone, getAll, DeletebyId,total,getbyid,changeEtat  }from "../controllers/ComandeController.js";
 
 const router = express.Router();
 
@@ -28,5 +28,8 @@ router.route("/deleteProduct")
   .post(
     getbyid
   ); 
-
+  router.route("/changeetat")
+  .post(
+    changeEtat
+  ); 
   export default router;

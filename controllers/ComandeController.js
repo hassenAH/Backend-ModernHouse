@@ -112,3 +112,22 @@ export async function getbyid (req, res) {
     res.status(500).json({ error: err });
   }
 }
+export async function changeEtat(req, res) {
+  try {
+    const { _id, etat } = req.body;
+
+    // Find the commande by its _id
+    const commande = await Cart.findOne({ _id });
+
+    // Update the etat value
+    commande.etat = etat;
+
+    // Save the updated commande
+    await commande.save();
+
+    res.status(200).send({ message: 'Etat updated successfully.' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ message: 'Internal server error.' });
+  }
+}
