@@ -114,10 +114,10 @@ export async function getbyid (req, res) {
 }
 export async function changeEtat(req, res) {
   try {
-    const { _id, etat } = req.body;
+    const { id, etat } = req.params;
 
     // Find the commande by its _id
-    const commande = await Cart.findOne({ _id });
+    const commande = await Cart.findOne({ id });
 
     // Update the etat value
     commande.etat = etat;

@@ -28,7 +28,7 @@ router.route("/deleteProduct")
   .post(
     getbyid
   ); 
-  router.route("/changeetat")
+  router.route("/changeetat/:id/:etat")
   .post(
     changeEtat
   ); 
