@@ -10,6 +10,7 @@ import cart from './routes/ComandeRoutes.js';
 import WishList from './routes/WishlistRoute.js';
 import product from './routes/ProductRoutes.js';
 import PaymentRoutes from './routes/PaymentRoutes.js';
+import RatingsRoute from './routes/RatingsRoute.js';
 
 const options ={
   definition: {
@@ -58,6 +59,7 @@ app.use('/api-docs',swaggerUi.serve,swaggerUi.setup(swaggerSpec))
 
 app.use('/user',userRoutes);
 app.use('/payment',PaymentRoutes);
+app.use('/Ratings',RatingsRoute);
 app.use('/commande',cart);
 app.use('/produit',product);
 app.use('/wishlist',WishList);
