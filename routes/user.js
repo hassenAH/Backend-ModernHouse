@@ -1,5 +1,5 @@
 import express from 'express';
-import { register,somme,unban, countLastWeekUsers,deleteOnce, ban,getAll,registerFourniseur, getOnce, verify,patchOnce, login ,uploadImage,forgetPass,resetPass,changepass,FindCommande} from '../controllers/user.js';
+import { register,recherche,somme,unban, countLastWeekUsers,deleteOnce, ban,getAll,registerFourniseur, getOnce, verify,patchOnce, login ,uploadImage,forgetPass,resetPass,changepass,FindCommande} from '../controllers/user.js';
 import { body } from 'express-validator';
 import { checkToken } from '../middlewares/auth.js';
 import multer from '../middlewares/multer-config.js';
@@ -395,6 +395,6 @@ router
  *       400:
  *         description: no users
  */
-   router.get('/countLastWeekUsers/',countLastWeekUsers);
-
+   router.get('/countLastWeekUsers',countLastWeekUsers);
+   router.get('/ad',recherche);
 export default router;

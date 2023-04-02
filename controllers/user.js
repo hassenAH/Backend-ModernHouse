@@ -123,6 +123,22 @@ export async function getOnce(req,res){
         res.status(500).json({error:err});
     });
 }
+export async function recherche(req,res){
+var query = req.body.ab;
+var pattern = "(?i)"+query+"(?-i)"
+   await User.find({
+    $or: [
+      { email:{ $regex:pattern }  },
+      { first_name: { $regex:pattern }  },
+    ]
+  })
+  .then(docs =>{
+      res.status(200).json(docs);
+  })
+  .catch(err=>{
+      res.status(500).json({error:err});
+  });
+}
 export async function countLastWeekUsers(req,res) {
   
     const lastWeekDate = new Date();

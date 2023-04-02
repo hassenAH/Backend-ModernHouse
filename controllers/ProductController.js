@@ -107,7 +107,7 @@ export async function getOnce  (req, res) {
 }
 export async function DeletebyId (req, res) {
   
-    let product = await Product.findById(req.body._id)
+    let product = await Product.findById(req.params.id)
     if (product) {
       await product.remove()
       return res.send({ message: "product" + product._id + " have been deleted" })
