@@ -5,7 +5,7 @@ export async function addOnce (req, res) {
 const user = await User.findOne({ _id: req.body.idUser })
 await  Product.create({
     productname: req.body.productname,
-    image: `${req.file.filename}`,
+   /* image: `${req.file.filename}`,*/
       price: req.body.price,
       hor: req.body.hor,
       ver: req.body.ver,
@@ -107,7 +107,7 @@ export async function getOnce  (req, res) {
 }
 export async function DeletebyId (req, res) {
   
-    let product = await Product.findById(req.body._id)
+    let product = await Product.findById(req.params.id)
     if (product) {
       await product.remove()
       return res.send({ message: "product" + product._id + " have been deleted" })

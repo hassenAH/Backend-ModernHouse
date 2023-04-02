@@ -123,7 +123,56 @@ export async function getOnce(req,res){
         res.status(500).json({error:err});
     });
 }
-
+export async function recherche(req,res){
+var query = req.body.ab;
+var pattern = "(?i)"+query+"(?-i)"
+   await User.find({
+    $or: [
+      { email:{ $regex:pattern }  },
+      { first_name: { $regex:pattern }  },
+    ]
+  })
+  .then(docs =>{
+      res.status(200).json(docs);
+  })
+  .catch(err=>{
+      res.status(500).json({error:err});
+  });
+}
+export async function countLastWeekUsers(req,res) {
+  
+    const lastWeekDate = new Date();
+    lastWeekDate.setDate(lastWeekDate.getDate() - 7);
+    const result = await User.aggregate([
+      {
+        $match: {
+          createdAt: {
+            $gte: lastWeekDate
+          }
+        }
+      },
+      {
+        $group: {
+          _id: null,
+          count: {
+            $sum: 1
+          }
+        }
+      }
+    ]).toArray().then(docs =>{
+      const count = docs.length > 0 ? docs[0].count : 0;
+      res.status(200).json(`Number of users registered in the last week: ${count}`);
+  })
+  .catch(err=>{
+      res.status(500).json({error:err});
+  });
+  
+    
+   
+  
+  
+  
+}
 export async function patchOnce(req,res){
 
     await User
@@ -277,7 +326,7 @@ export async function resetPass(req,res){
      
      
   
-      res.send("user banned sucessfully");
+      res.send("user unbanned sucessfully");
     } catch (error) {
       console.log("prob");
     }
@@ -300,8 +349,8 @@ export async function resetPass(req,res){
     .create({
         email: req.body.email,
         password: hashedPassword,
-        role: "Fournisseur",
-        Image:"",
+        role: "Supplier",
+        Image:"any.jpg",
         verified: false,
         banned:false,
         first_name: req.body.first_name,
@@ -318,11 +367,11 @@ export async function resetPass(req,res){
     .catch(err=>{
         res.status(500).json({error:err});
     });
-   /* const u = await User.findOne({
+    const u = await User.findOne({
       email:req.body.email});
     var message = `${u.id}`;
     var name =  u.last_name +" "+u.first_name ;
     var v = await verifymail(name,message);
-        sendEmail( u.email, "Verify Email", v);*/
+        sendEmail( u.email, "Verify Email", v);
     
 }
