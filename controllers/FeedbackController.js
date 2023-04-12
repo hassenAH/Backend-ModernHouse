@@ -19,13 +19,20 @@ export async function addOnce(req, res){
     });
 }
 
+
 export async function getRatingsByProductId(req, res) {
+
     try {
         const Ratings = await Rate.find({ product_id: req.body.product_id});
         // console.log(`Products: ${products}`);
-        res.status(200).json(Ratings);
+        const sum = Ratings.reduce((acc, val) => acc + val.rate, 0)
+        const avg = Math.round((sum / Ratings.length)*100) / 100
+        res.status(200).json({Ratings, 'sum': avg});
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Server error' });
     }
 }
+
+
+
