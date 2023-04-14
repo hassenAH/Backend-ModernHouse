@@ -11,6 +11,7 @@ import WishList from './routes/WishlistRoute.js';
 import product from './routes/ProductRoutes.js';
 import PaymentRoutes from './routes/PaymentRoutes.js';
 import RatingsRoute from './routes/RatingsRoute.js';
+import ReclamationRoute from './routes/ReclamationRoute.js';
 
 const options ={
   definition: {
@@ -63,6 +64,7 @@ app.use('/Ratings',RatingsRoute);
 app.use('/commande',cart);
 app.use('/produit',product);
 app.use('/wishlist',WishList);
+app.use('/Reclam',ReclamationRoute);
 
 
 app.use(notFoundError);
