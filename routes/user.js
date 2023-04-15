@@ -1,9 +1,9 @@
 import express from 'express';
 
-import { register,recherche,somme,unban,deleteOnce,
+import { register,unban,deleteOnce,
    ban,getAll,registerFourniseur, getOnce, 
    verify,patchOnce, login ,uploadImage,forgetPass,
-   resetPass,changepass,FindCommande} from '../controllers/user.js';
+   resetPass,changepass,FindCommande , countLastWeekUsers , month} from '../controllers/user.js';
 
 import { body } from 'express-validator';
 import { checkToken } from '../middlewares/auth.js';

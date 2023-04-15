@@ -39,10 +39,10 @@ export async function deletewish(req, res){
   const { userId, productId } = req.body;
 
   
-  const wishList = await Wish.findOne({ userId }).populate('products');
+  const wishList = await Wish.findOne({user: req.body.userId}).populate('products');
   if (!wishList) {
     return res.status(404).send('Wishlist not found');
-  }
+  }console.log(wishList)
   const productIndex = wishList.products.findIndex(p => p._id == req.body.productId);
 
   if (productIndex === -1) {
