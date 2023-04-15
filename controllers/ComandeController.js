@@ -1,6 +1,7 @@
 import Product from"../models/Product.js";
 import Cart from "../models/Cart.js";
 import User from "../models/user.js";
+import moment from "moment/moment.js";
 
 export async function addOnce (req, res){
   let date_ob = new Date()
@@ -82,7 +83,7 @@ export async function total(req, res){
     }
   }
   
-  res.send({"total = ":totalAmount});
+  res.send({totalAmount});
 }
 
 export async function CardsBymonth(req,res){
@@ -107,7 +108,7 @@ export async function CardsBymonth(req,res){
 }
 export async function getAll  (req, res) {
   try {
-    const carts = await Cart.find({}).populate("user");;
+    const carts = await Cart.find({ etat: { $in: ['Order', 'Picking inventory','Sorting','Packing'] } }).populate("user");
     res.status(200).json(carts);
   } catch (err) {
     res.status(500).json({ error: err });
@@ -134,10 +135,10 @@ export async function getbyid (req, res) {
 }
 export async function changeEtat(req, res) {
   try {
-    const { id, etat } = req.params;
+    const { _id, etat } = req.params;
 
     // Find the commande by its _id
-    const commande = await Cart.findOne({ id });
+    const commande = await Cart.findOne({ _id });
 
     // Update the etat value
     commande.etat = etat;
@@ -151,3 +152,37 @@ export async function changeEtat(req, res) {
     res.status(500).send({ message: 'Internal server error.' });
   }
 }
+export async function getbyidcard (req, res) {
+  try {
+    const _id = req.params;
+    const cart = await Cart.findOne({_id}).populate("products").populate("user");
+    res.status(200).json(cart);
+  } catch (err) {
+    res.status(500).json({ error: err });
+  }
+}
+export async function getShippingCarts(req, res) {
+  try {
+    const carts = await Cart.find({ etat: "Shipping" }).populate("user");
+    res.status(200).json(carts);
+  } catch (err) {
+    res.status(500).json({ error: err });
+  }
+}
+export async function getPackingCarts(req, res) {
+  try {
+    const carts = await Cart.find({ etat: "Packing" }).populate("user");
+    res.status(200).json(carts);
+  } catch (err) {
+    res.status(500).json({ error: err });
+  }
+}
+export async function getShippedAndReturnedCarts(req, res) {
+  try {
+    const carts = await Cart.find({ etat: { $in: ["Shipped", "Returned"] } }).populate("user");
+    res.status(200).json(carts);
+  } catch (err) {
+    res.status(500).json({ error: err });
+  }
+}
+

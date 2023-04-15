@@ -1,6 +1,9 @@
 import express from 'express';
 
-import { addOnce, deleteone, getAll, DeletebyId,total,getbyid,changeEtat, CardsBymonth }from "../controllers/ComandeController.js";
+import multer   from 'multer';
+import { addOnce, deleteone, getAll, DeletebyId,total,getbyid,changeEtat,getbyidcard,getShippingCarts
+, getShippedAndReturnedCarts ,getPackingCarts }from "../controllers/ComandeController.js";
+
 
 const router = express.Router();
 router.route("/CardsBymonth")
@@ -31,8 +34,27 @@ router.route("/deleteProduct")
   .post(
     getbyid
   ); 
-  router.route("/changeetat/:id/:etat")
+  router.route("/getbyidcard/:_id")
+  .post(
+    getbyidcard
+  ); 
+  router.route("/changeetat/:_id/:etat")
   .post(
     changeEtat
   ); 
+  router.route("/getShippingCarts")
+  .post(
+    getShippingCarts
+  ); 
+  router.route("/getPackingCarts")
+  .post(
+    getPackingCarts
+  );
+  
+  router.route("/getShippedAndReturnedCarts")
+  .post(
+    getShippedAndReturnedCarts
+  ); 
+
+  
   export default router;

@@ -9,6 +9,7 @@ import userRoutes from './routes/user.js';
 import cart from './routes/ComandeRoutes.js';
 import WishList from './routes/WishlistRoute.js';
 import product from './routes/ProductRoutes.js';
+import Livraison from './routes/LivreurRoute.js';
 import PaymentRoutes from './routes/PaymentRoutes.js';
 import RatingsRoute from './routes/RatingsRoute.js';
 import ReclamationRoute from './routes/ReclamationRoute.js';
@@ -64,8 +65,12 @@ app.use('/Ratings',RatingsRoute);
 app.use('/commande',cart);
 app.use('/produit',product);
 app.use('/wishlist',WishList);
+<<<<<<< Updated upstream
 app.use('/Reclam',ReclamationRoute);
 
+=======
+
+>>>>>>> Stashed changes
 
 app.use(notFoundError);
 app.use(errorHandler);

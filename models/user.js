@@ -20,6 +20,9 @@ const userSchema=new Schema(
             type:String,
             required:true
         },
+        adress:{
+            type:String
+        },
         role:{
             type:String
         },

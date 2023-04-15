@@ -9,7 +9,8 @@ const CartSchema = new Schema({
   date: { type: Date },
   etat: { type: String,
     enum: {
-      values: ['Order', 'Picking inventory','Sorting','Packing','Shipping'],
+      values: ['Order', 'Picking inventory','Sorting','Packing','Shipping','Shipped'
+      ,'Returned'],
     } },
 
 });
