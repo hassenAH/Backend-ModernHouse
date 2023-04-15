@@ -65,12 +65,9 @@ app.use('/Ratings',RatingsRoute);
 app.use('/commande',cart);
 app.use('/produit',product);
 app.use('/wishlist',WishList);
-<<<<<<< Updated upstream
+
 app.use('/Reclam',ReclamationRoute);
-
-=======
-
->>>>>>> Stashed changes
+app.use('/livraison',Livraison);
 
 app.use(notFoundError);
 app.use(errorHandler);
