@@ -1,5 +1,5 @@
 import express from 'express';
-import { register,somme,unban, countLastWeekUsers,deleteOnce, ban,getAll,registerFourniseur, getOnce, verify,patchOnce, login ,uploadImage,forgetPass,resetPass,changepass,FindCommande} from '../controllers/user.js';
+import { register,month,unban, countLastWeekUsers,deleteOnce, ban,getAll,registerFourniseur, getOnce, verify,patchOnce, login ,uploadImage,forgetPass,resetPass,changepass,FindCommande} from '../controllers/user.js';
 import { body } from 'express-validator';
 import { checkToken } from '../middlewares/auth.js';
 import multer from '../middlewares/multer-config.js';
@@ -199,6 +199,60 @@ const router=express.Router();
  *       404:
  *         description: The User was not found
  */
+ /**
+ * @swagger
+ * /user/countLastWeekUsers/:
+ *   get:
+ *     summary: count  user registred from last week
+ *     tags: [User]
+ *     
+ *     responses:
+ *       200:
+ *         description: users registred from last week
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/User'
+ *       400:
+ *         description: no users
+ */
+router.get('/countLastWeekUsers',countLastWeekUsers);
+ /**
+ * @swagger
+ * /user/registerbymonth/:
+ *   get:
+ *     summary: count  user registred from last week
+ *     tags: [User]
+ *     
+ *     responses:
+ *       200:
+ *         description: users registred from last week
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/User'
+ *       400:
+ *         description: no users
+ */
+  router.get('/registerbymonth',month);
+/**
+ * @swagger
+ * /user/countLastWeekUsers/:
+ *   get:
+ *     summary: count  user registred from last week
+ *     tags: [User]
+ *     
+ *     responses:
+ *       200:
+ *         description: users registred from last week
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/User'
+ *       400:
+ *         description: no users
+ */
+ router.get('/countLastWeekUsers',countLastWeekUsers);
 router
     .route('/')
     .get(getAll)
@@ -378,23 +432,6 @@ router
  *         description: User can not be found
  */
    router.get('/ban/:id',ban);
-    /**
- * @swagger
- * /user/countLastWeekUsers/:
- *   get:
- *     summary: count  user registred from last week
- *     tags: [User]
- *     
- *     responses:
- *       200:
- *         description: users registred from last week
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/User'
- *       400:
- *         description: no users
- */
-   router.get('/countLastWeekUsers',countLastWeekUsers);
+   
   
 export default router;

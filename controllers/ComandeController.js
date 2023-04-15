@@ -70,9 +70,9 @@ export async function total(req, res){
     return res.status(404).send('Cart not found');
   }
   
-  // Calculer la somme totale du montant du panier
+  // Calculer la somme total du montant du panier
   let totalAmount = 0;
-  var total = 0;
+  
   for (var cartProduct of cart.products) {
     var product = await Product.findById(cartProduct._id);
     if (product) {
@@ -85,6 +85,26 @@ export async function total(req, res){
   res.send({"total = ":totalAmount});
 }
 
+export async function CardsBymonth(req,res){
+
+    await  Cart.find({
+      createdAt: { $gte: new Date(new Date().getFullYear(), 0, 1) } // get users registered on or after Jan 1 of the current year
+    }).sort({ createdAt: 1 })
+.then(docs=>{
+  const months = {};
+     docs.forEach(cart => {
+      const CartMonth = cart.createdAt.getMonth() + 1;
+      if (!months[CartMonth]) {
+        months[CartMonth] = [];
+      }
+      months[CartMonth].push(cart);
+    });
+      res.status(200).json({message: 'cart :', months});
+  })
+  .catch(err=>{
+      res.status(500).json({error:err});
+  });
+}
 export async function getAll  (req, res) {
   try {
     const carts = await Cart.find({}).populate("user");;

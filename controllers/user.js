@@ -127,8 +127,8 @@ export async function getOnce(req,res){
 export async function countLastWeekUsers(req,res) {
   
     const lastWeekDate = new Date();
-    lastWeekDate.setDate(lastWeekDate.getDate() - 7);
-    const result = await User.aggregate([
+    lastWeekDate.setDate(lastWeekDate.getDate() - 30);
+     User.aggregate([
       {
         $match: {
           createdAt: {
@@ -144,7 +144,7 @@ export async function countLastWeekUsers(req,res) {
           }
         }
       }
-    ]).toArray().then(docs =>{
+    ]).then(docs =>{
       const count = docs.length > 0 ? docs[0].count : 0;
       res.status(200).json(`Number of users registered in the last week: ${count}`);
   })
@@ -360,3 +360,50 @@ export async function resetPass(req,res){
         sendEmail( u.email, "Verify Email", v);
     
 }
+export async function month(req,res){
+  try {
+     await  User.find({
+      createdAt: { $gte: new Date(new Date().getFullYear(), 0, 1) } // get users registered on or after Jan 1 of the current year
+    }).sort({ createdAt: 1 })
+.then(docs=>{
+  const months = {};
+     docs.forEach(user => {
+      const userMonth = user.createdAt.getMonth() + 1;
+      if (!months[userMonth]) {
+        months[userMonth] = [];
+      }
+      months[userMonth].push(user);
+    });
+      res.status(200).json({message: 'Users :', months});
+  })
+  .catch(err=>{
+      res.status(500).json({error:err});
+  });
+    
+
+   
+  } catch (error) {
+    res.status(500).json("prob");
+  }
+}
+/*const cursor = collection.aggregate([
+      {
+        $match: {
+          registration_date: { $gte: new Date(new Date().getFullYear(), 0, 1) } // get users registered on or after Jan 1 of the current year
+        }
+      },
+      {
+        $group: {
+          _id: { $month: '$registration_date' },
+          total_users: { $sum: 1 }
+        }
+      },
+      {
+        $sort: { _id: 1 }
+      }
+    ]);
+
+    // iterate through the cursor and log the results
+    await cursor.forEach(doc => {
+      console.log(`Month ${doc._id}: ${doc.total_users} registered users`);
+    }); */

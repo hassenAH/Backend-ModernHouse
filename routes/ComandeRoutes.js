@@ -1,9 +1,12 @@
 import express from 'express';
-import multer   from 'multer';
-import { addOnce, deleteone, getAll, DeletebyId,total,getbyid,changeEtat  }from "../controllers/ComandeController.js";
+
+import { addOnce, deleteone, getAll, DeletebyId,total,getbyid,changeEtat, CardsBymonth }from "../controllers/ComandeController.js";
 
 const router = express.Router();
-
+router.route("/CardsBymonth")
+  .get(
+    CardsBymonth
+  );
 router.route("/addcomande")
   .post(
     addOnce
