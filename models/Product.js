@@ -10,6 +10,7 @@ const ProductSchema = new Schema(
     ver: { type: Number },
     surf: { type: Number },
     quantity: { type: Number },
+    quantitySales: { type: Number },
     
     category : { type: String,
       enum: {

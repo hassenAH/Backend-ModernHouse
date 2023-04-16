@@ -29,7 +29,7 @@ export async function addOnce (req, res){
     
         if (cart.products.includes(product._id)) {
           cart.quantity++;
-          product.quantity--;    
+          product.quantitySales++;    
               } 
     
         cart.products.push(product._id);

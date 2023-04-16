@@ -8,6 +8,7 @@ await  Product.create({
    /* image: `${req.file.filename}`,*/
       price: req.body.price,
       hor: req.body.hor,
+      quantitySales:0,
       ver: req.body.ver,
       surf: req.body.surf,
       quantity: req.body.quantity,
@@ -22,6 +23,7 @@ await  Product.create({
         productname: newProduct.productname,
         image: newProduct.image,
       price: newProduct.price,
+      quantitySales:0,
       hor: newProduct.hor,
       ver: newProduct.ver,
       surf: newProduct.surf,
