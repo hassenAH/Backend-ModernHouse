@@ -151,3 +151,15 @@ export async function sortbypricedes(req, res) {
   res.status(200).json(products);
   
 }
+
+
+export const getTotalSales = async (req, res) => {
+  try {
+    const products = await Product.find().select('quantitySales'); // get all products with quantitySales field
+    const totalSales = products.reduce((acc, curr) => acc + curr.quantitySales, 0); // calculate the total sales using reduce method
+    res.status(200).json({ totalSales });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Server Error' });
+  }
+};

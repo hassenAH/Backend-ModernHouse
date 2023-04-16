@@ -1,7 +1,7 @@
 import express from 'express';
 import multer from '../middlewares/multer-config.js';
 import { addOnce, putOnce, getAll, getOnce, DeletebyId, DeleteAll, getProductsByUserId,
-  sortbyalpha,getProductsByCategory,sortbypriceasc,sortbypricedes } from "../controllers/ProductController.js";
+  sortbyalpha,getTotalSales,getProductsByCategory,sortbypriceasc,sortbypricedes } from "../controllers/ProductController.js";
 
 const router = express.Router();
 
@@ -40,6 +40,9 @@ router.route("/update/:id")
       sortbypricedes
     );
     
-    
+    router.route("/getTotalSales")
+  .post(
+    getTotalSales
+  );
     
 export default router;

@@ -230,8 +230,8 @@ export async function getMaxProductSales(req, res) {
   try {
     const sales = await Cart.aggregate([
       { $unwind: "$products" },
-      { $group: { _id: "$products", totalSales: { $sum: "$quantity" } } },
-      { $sort: { totalSales: -1 } },
+      { $group: { _id: "$products", totalSales: { $sum: "$quantitySales" } } },
+      { $sort: { totalSales: +1 } },
       { $limit: 1 }
     ]);
     
@@ -251,30 +251,19 @@ export async function getMaxProductSales(req, res) {
     return res.status(500).json({ message: "Internal server error" });
   }
 }
-export async function getProductSales(req,res) {
+export async function getProductSales(req, res) {
   try {
-    const productSales = await Cart.aggregate([
-      {
-        $unwind: "$products"
-      },
-      {
-        $group: {
-          _id: "$products",
-          totalSales: { $sum: "$quantity" }
-        }
-      },
-      {
-        $sort: { totalSales: -1 }
-      }
-    ]);
-    
-    return res.status(200).json({
-      productSales
-    });
-   
+    const products = await Product.find({})
+      .select('name quantitySales')
+      .sort({ quantitySales: -1 });
+
+    return res.json(products);
   } catch (error) {
     console.error(error);
-    throw error;
+    return res.status(500).send('Server Error');
   }
 }
+
+
+
 
