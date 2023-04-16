@@ -153,6 +153,7 @@ export async function sortbypricedes(req, res) {
 }
 
 
+
 export const getTotalSales = async (req, res) => {
   try {
     const products = await Product.find().select('quantitySales'); // get all products with quantitySales field
@@ -163,3 +164,39 @@ export const getTotalSales = async (req, res) => {
     res.status(500).json({ message: 'Server Error' });
   }
 };
+
+export async function countLastsProduct(req,res) {
+  
+  const lastWeekDate = new Date();
+  lastWeekDate.setDate(lastWeekDate.getDate() - 30);
+  Product.aggregate([
+    {
+      $match: {
+        createdAt: {
+          $gte: lastWeekDate
+        }
+      }
+    },
+    {
+      $group: {
+        _id: null,
+        count: {
+          $sum: 1
+        }
+      }
+    }
+  ]).then(docs =>{
+    const count = docs.length > 0 ? docs[0].count : 0;
+    res.status(200).json(count);
+})
+.catch(err=>{
+    res.status(500).json({error:err});
+});
+
+  
+ 
+
+
+
+}
+

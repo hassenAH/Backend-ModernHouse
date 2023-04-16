@@ -3,11 +3,17 @@ import express from 'express';
 import multer   from 'multer';
 import { addOnce, deleteone, getAll, DeletebyId,total,getbyid,changeEtat,getbyidcard,getShippingCarts
 
-, getShippedAndReturnedCarts,getPackingCarts , CardsBymonth,getMaxProductSales,getProductSales}from "../controllers/ComandeController.js";
+
+, getShippedAndReturnedCarts ,getPackingCarts , CardsBymonth,getMaxProductSales,getProductSales,getAllcommanade}from "../controllers/ComandeController.js";
+
 
 
 
 const router = express.Router();
+router.route("/getAllcommanade")
+  .get(
+    getAllcommanade
+  );
 router.route("/CardsBymonth")
   .get(
     CardsBymonth

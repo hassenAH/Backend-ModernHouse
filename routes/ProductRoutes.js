@@ -1,10 +1,15 @@
 import express from 'express';
 import multer from '../middlewares/multer-config.js';
 import { addOnce, putOnce, getAll, getOnce, DeletebyId, DeleteAll, getProductsByUserId,
-  sortbyalpha,getTotalSales,getProductsByCategory,sortbypriceasc,sortbypricedes } from "../controllers/ProductController.js";
+
+  sortbyalpha,getProductsByCategory,sortbypriceasc,sortbypricedes,countLastsProduct ,getTotalSales} from "../controllers/ProductController.js";
+
 
 const router = express.Router();
-
+router.route("/countLastsProduct")
+  .get(
+    countLastsProduct
+  );
 router.route("/addproduct")
   .post(
     addOnce

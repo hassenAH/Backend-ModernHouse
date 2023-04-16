@@ -89,7 +89,7 @@ export async function total(req, res){
 export async function CardsBymonth(req,res){
 
     await  Cart.find({
-      createdAt: { $gte: new Date(new Date().getFullYear(), 0, 1) } // get users registered on or after Jan 1 of the current year
+      createdAt: { $gte: new Date(new Date().getFullYear(), 0, 1) } 
     }).sort({ createdAt: 1 })
 .then(docs=>{
   const months = {};
@@ -100,7 +100,7 @@ export async function CardsBymonth(req,res){
       }
       months[CartMonth].push(cart);
     });
-      res.status(200).json({message: 'cart :', months});
+      res.status(200).json({months});
   })
   .catch(err=>{
       res.status(500).json({error:err});
