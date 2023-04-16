@@ -109,7 +109,7 @@ export async function CardsBymonth(req,res){
 export async function getAll  (req, res) {
   try {
     const carts = await Cart.find({ etat: { $in: ['Order', 'Picking inventory','Sorting','Packing'] } }).populate("user");
-<<<<<<< Updated upstream
+
     res.status(200).json(carts);
   } catch (err) {
     res.status(500).json({ error: err });
@@ -118,8 +118,7 @@ export async function getAll  (req, res) {
 export async function getAllcommanade  (req, res) {
   try {
     const carts = await Cart.find({ });
-=======
->>>>>>> Stashed changes
+
     res.status(200).json(carts);
   } catch (err) {
     res.status(500).json({ error: err });
@@ -196,9 +195,6 @@ export async function getShippedAndReturnedCarts(req, res) {
     res.status(500).json({ error: err });
   }
 }
-<<<<<<< Updated upstream
-
-=======
 export async function countLastWeekUsers(req,res) {
     
   const now = new Date();
@@ -281,4 +277,4 @@ export async function getProductSales(req,res) {
     throw error;
   }
 }
->>>>>>> Stashed changes
+
