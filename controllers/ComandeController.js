@@ -109,6 +109,7 @@ export async function CardsBymonth(req,res){
 export async function getAll  (req, res) {
   try {
     const carts = await Cart.find({ etat: { $in: ['Order', 'Picking inventory','Sorting','Packing'] } }).populate("user");
+<<<<<<< Updated upstream
     res.status(200).json(carts);
   } catch (err) {
     res.status(500).json({ error: err });
@@ -117,6 +118,8 @@ export async function getAll  (req, res) {
 export async function getAllcommanade  (req, res) {
   try {
     const carts = await Cart.find({ });
+=======
+>>>>>>> Stashed changes
     res.status(200).json(carts);
   } catch (err) {
     res.status(500).json({ error: err });
@@ -193,4 +196,89 @@ export async function getShippedAndReturnedCarts(req, res) {
     res.status(500).json({ error: err });
   }
 }
+<<<<<<< Updated upstream
 
+=======
+export async function countLastWeekUsers(req,res) {
+    
+  const now = new Date();
+  const lastWeek = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
+  const lastWeekStr = lastWeek.toISOString(); // convert date object to string
+  const start= lastWeek.toISOString() // format as ISO date string
+  const  end = now.toISOString()
+    try {
+      const carts = await User.find({ created_at: {  $gte: ISODate((start)),
+        $lt: ISODate(end) } })
+      res.status(200).json(carts);
+    } catch (err) {
+      res.status(500).json({ error: err });
+    } 
+}
+async function countLastWeekUsers2() {
+  const now = moment();
+  const lastWeek = moment().subtract(7, 'days');
+  const query = { created_at: { $gte: lastWeek.toDate(), $lte: now.toDate() } };
+
+  const count = await User.countDocuments(query);
+
+  return count;
+}
+export async function count(req,res) {
+  const count = await countLastWeekUsers2();
+  try{res.send(`There were ${count} new users registered in the last week.`);}catch (err) {
+    res.status(500).json({ error: err });
+  } 
+  
+}
+export async function getMaxProductSales(req, res) {
+  try {
+    const sales = await Cart.aggregate([
+      { $unwind: "$products" },
+      { $group: { _id: "$products", totalSales: { $sum: "$quantity" } } },
+      { $sort: { totalSales: -1 } },
+      { $limit: 1 }
+    ]);
+    
+    if (sales.length === 0) {
+      return res.status(404).json({ message: "No sales found" });
+    }
+    
+    const maxSales = sales[0];
+    const product = await Product.findById(maxSales._id);
+    
+    return res.status(200).json({
+      product,
+      totalSales: maxSales.totalSales
+    });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ message: "Internal server error" });
+  }
+}
+export async function getProductSales(req,res) {
+  try {
+    const productSales = await Cart.aggregate([
+      {
+        $unwind: "$products"
+      },
+      {
+        $group: {
+          _id: "$products",
+          totalSales: { $sum: "$quantity" }
+        }
+      },
+      {
+        $sort: { totalSales: -1 }
+      }
+    ]);
+    
+    return res.status(200).json({
+      productSales
+    });
+   
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+}
+>>>>>>> Stashed changes
