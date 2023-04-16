@@ -71,7 +71,7 @@ export async function total(req, res){
     return res.status(404).send('Cart not found');
   }
   
-  // Calculer la somme total du montant du panier
+  // Calculer la somme total du montant du panier 
   let totalAmount = 0;
   
   for (var cartProduct of cart.products) {
@@ -109,6 +109,14 @@ export async function CardsBymonth(req,res){
 export async function getAll  (req, res) {
   try {
     const carts = await Cart.find({ etat: { $in: ['Order', 'Picking inventory','Sorting','Packing'] } }).populate("user");
+    res.status(200).json(carts);
+  } catch (err) {
+    res.status(500).json({ error: err });
+  }
+}
+export async function getAllcommanade  (req, res) {
+  try {
+    const carts = await Cart.find({ });
     res.status(200).json(carts);
   } catch (err) {
     res.status(500).json({ error: err });

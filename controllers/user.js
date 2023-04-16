@@ -146,7 +146,7 @@ export async function countLastWeekUsers(req,res) {
       }
     ]).then(docs =>{
       const count = docs.length > 0 ? docs[0].count : 0;
-      res.status(200).json(`Number of users registered in the last week: ${count}`);
+      res.status(200).json(count);
   })
   .catch(err=>{
       res.status(500).json({error:err});
@@ -374,7 +374,7 @@ export async function month(req,res){
       }
       months[userMonth].push(user);
     });
-      res.status(200).json({message: 'Users :', months});
+      res.status(200).json({months});
   })
   .catch(err=>{
       res.status(500).json({error:err});
