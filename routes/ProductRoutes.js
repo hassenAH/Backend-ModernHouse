@@ -2,7 +2,7 @@ import express from 'express';
 import multer from '../middlewares/multer-config.js';
 import { addOnce, putOnce, getAll, getOnce, DeletebyId, DeleteAll, getProductsByUserId,
 
-  sortbyalpha,getProductsByCategory,sortbypriceasc,sortbypricedes,countLastsProduct ,getTotalSales,getTotalSalesbySupplier} from "../controllers/ProductController.js";
+  sortbyalpha,getProductsByCategory,sortbypriceasc,sortbypricedes,countLastsProduct ,getBestSellingProductsSupplier,getTotalSales,getTotalSalesbySupplier,getBestSellingProducts} from "../controllers/ProductController.js";
 
 
 const router = express.Router();
@@ -53,5 +53,15 @@ router.route("/update/:id")
   .post(
     getTotalSalesbySupplier
   );
+  router.route("/getBestSellingProducts")
+  .post(
+    getBestSellingProducts
+  );
+  router.route("/getBestSellingProductsSupplier")
+  .post(
+    getBestSellingProductsSupplier
+  );
+  
+  
     
 export default router;

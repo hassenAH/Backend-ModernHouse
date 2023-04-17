@@ -151,9 +151,25 @@ export async function sortbypricedes(req, res) {
   res.status(200).json(products);
   
 }
+export const getBestSellingProductsSupplier = async (req, res) => {
+  try {
+    const products = await Product.find({ user: req.body.user}).sort('-quantitySales').limit(10); // get top 10 products by quantity sold
+    res.status(200).json(products);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Server Error' });
+  }
+};
 
-
-
+export const getBestSellingProducts = async (req, res) => {
+  try {
+    const products = await Product.find().sort('-quantitySales').limit(10); // get top 10 products by quantity sold
+    res.status(200).json(products);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Server Error' });
+  }
+};
 export const getTotalSales = async (req, res) => {
   try {
     const products = await Product.find().select('quantitySales'); // get all products with quantitySales field
@@ -205,8 +221,8 @@ export async function countLastsProduct(req,res) {
 });
 
   
- 
 
+ 
 
 
 }
