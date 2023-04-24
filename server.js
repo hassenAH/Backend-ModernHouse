@@ -13,7 +13,7 @@ import Livraison from './routes/LivreurRoute.js';
 import PaymentRoutes from './routes/PaymentRoutes.js';
 import RatingsRoute from './routes/RatingsRoute.js';
 import ReclamationRoute from './routes/ReclamationRoute.js';
-
+import PromoRoute from './routes/PromoRoute.js';
 const options ={
   definition: {
     openapi : '3.0.0',
@@ -50,6 +50,11 @@ mongoose
   .catch((err) => {
     console.log(err);
   });
+app.set('view engine', 'ejs');
+app.get('/login', (req, res) => {
+  res.render('../login')
+})
+
 
 
 app.use(cors());
@@ -59,6 +64,10 @@ app.use(express.urlencoded({ extended: true }));
 app.use("/img",express.static("public/images"));
 app.use('/api-docs',swaggerUi.serve,swaggerUi.setup(swaggerSpec))
 
+// ? Register the session router
+
+
+app.use('/Promo',PromoRoute);
 app.use('/user',userRoutes);
 app.use('/payment',PaymentRoutes);
 app.use('/Ratings',RatingsRoute);

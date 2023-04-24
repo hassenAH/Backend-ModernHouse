@@ -4,7 +4,7 @@ import express from 'express';
 import { register,unban,deleteOnce,
    ban,getAll,registerFourniseur, getOnce, 
    verify,patchOnce, login ,uploadImage,forgetPass,
-   resetPass,changepass,FindCommande , countLastWeekUsers , month} from '../controllers/user.js';
+   resetPass,changepass,FindCommande , countLastWeekUsers , month,changeRole,FindPromobyUser} from '../controllers/user.js';
 
 
 import { body } from 'express-validator';
@@ -339,7 +339,7 @@ router.post('/fournisseur',registerFourniseur);
  * @swagger
  * /user/getcommandes/{id}:
  * 
- *   post:
+ *   get:
  *     summary: Get all Commande
  *     tags: [User]
  *     parameters:
@@ -360,6 +360,33 @@ router.post('/fournisseur',registerFourniseur);
  *         description: Some server error*
  */
    router.get('/getcommandes/:id',FindCommande)
+     /**
+ * @swagger
+ * /user/FindPromobyUser/{id}:
+ * 
+ *   get:
+ *     summary: Get all Promo
+ *     tags: [User]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: user id
+ *     responses:
+ *       200:
+ *         description: commandes found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/User'
+ *       500:
+ *         description: Some server error*
+ */
+      router.get('/FindPromobyUser/:id',FindPromobyUser)
+      
+   
 router
     .route('/:id')
     .post(multer,uploadImage)
@@ -439,5 +466,29 @@ router
  *         description: User can not be found
  */
    router.get('/ban/:id',ban);
-
+     /**
+ * @swagger
+ * /user/changeRole/{id}:
+ *   get:
+ *     summary: ban a user  by id
+ *     tags: [User]
+ *     parameters:
+ *       - in : path
+ *         name: id
+ *         description: id of id
+ *         schema:
+ *           type: string
+ *         required: true
+ *     responses:
+ *       200:
+ *         description: ban by  id
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/User'
+ *       400:
+ *         description: User can not be found
+ */
+      router.post('/changeRole/:id',changeRole);
+   
 export default router;
