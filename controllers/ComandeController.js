@@ -78,11 +78,12 @@ export async function total(req, res){
     var product = await Product.findById(cartProduct._id);
     if (product) {
       totalAmount = totalAmount + product.price;
-       
       
     }
+    
   }
-  
+  cart.total = totalAmount;
+    await cart.save()
   res.send({totalAmount});
 }
 
@@ -137,7 +138,7 @@ export async function DeletebyId (req, res) {
 }
 export async function getbyid (req, res) {
   try {
-    const cart = await Cart.findOne({ user: req.body.idUser  }).populate("products");
+    const cart = await Cart.findOne({ user: req.body.idUser  }).populate("user").populate('products');
     res.status(200).json(cart);
   } catch (err) {
     res.status(500).json({ error: err });
@@ -162,15 +163,25 @@ export async function changeEtat(req, res) {
     res.status(500).send({ message: 'Internal server error.' });
   }
 }
-export async function getbyidcard (req, res) {
+export async function getbyidcard(req, res) {
   try {
-    const _id = req.params;
-    const cart = await Cart.findOne({_id}).populate("products").populate("user");
+    const cart = await Cart.findById(req.params._id).populate("user")
+      .populate("products");
+    res.status(200).json(cart);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: error.message });
+  }
+  
+
+  try {
+    const cart = await Cart.findOne({ user: req.body.idUser  }).populate("user").populate('products');
     res.status(200).json(cart);
   } catch (err) {
     res.status(500).json({ error: err });
   }
 }
+
 export async function getShippingCarts(req, res) {
   try {
     const carts = await Cart.find({ etat: "Shipping" }).populate("user");
