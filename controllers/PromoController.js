@@ -85,7 +85,7 @@ export async function deletePromo(req,res){
       try {
         var  id=req.params.id;
   
-        var c = await Case.findOne({_id:id})
+        var c = await Promo.findOne({_id:id})
         if(!c)
         res.status(404).json("promo not found")
 
