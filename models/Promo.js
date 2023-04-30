@@ -8,6 +8,7 @@ const PromoSchema = new Schema(
         active: { type: Boolean, default: true },
         expirationDate: { type: Date, required: true },
         user:{ type: Schema.Types.ObjectId, ref: 'User' },
+        users:[{ type: Schema.Types.ObjectId, ref: 'User' }],
     },
 
     {

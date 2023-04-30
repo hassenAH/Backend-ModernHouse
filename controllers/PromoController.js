@@ -21,7 +21,8 @@ export async function addPromo(req , res){
         code,
         discount,
       expirationDate,
-      user: [user._id]
+      user: [user._id],
+      users:[],
     });
     
       res.status(200).json({message : "ajout avec succeés",c});
@@ -34,7 +35,48 @@ export async function addPromo(req , res){
   
 };
 
+export async function CheckPromo(req , res){
+ 
+  try {
+     
+     var code  = req.body.code;
+     
+     const user = await User.findOne({ _id: req.body.idUser })
+ 
+ if(user) 
+ {
+  var c = await Promo.findOne({ code: code });
+  var exist = false;
+  for(var usercheck of c.users)
+  {
+    var u = await User.findById(usercheck)
+    if(u)
+    { exist = true ;
+      res.status(500).json({message : "error code"});
+    }
+  }
+  if(!exist)
+  {
+    c.users.push(user._id)
+    c.quantity++;
+    await c.save()
 
+    res.status(200).json({message : "ajout avec succeés",c});
+  }
+ 
+  
+ }
+     // Create user in our database
+     
+       
+ 
+     
+   } catch (err) {
+     console.log(err);
+   }
+   
+ };
+ 
 
 export async function UpdatePromo(req,res){
 

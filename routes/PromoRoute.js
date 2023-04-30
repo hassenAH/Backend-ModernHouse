@@ -1,6 +1,7 @@
 import express from'express' ;
+import { checkSchema } from 'express-validator';
 
-import  {GetPromo,GetALLPromo,addPromo,UpdatePromo,deletePromo,disablePromo} from"../controllers/PromoController.js" ;
+import  {GetPromo,GetALLPromo,addPromo,UpdatePromo,deletePromo,disablePromo,CheckPromo} from"../controllers/PromoController.js" ;
 
 
 
@@ -109,7 +110,7 @@ router.post('/add',addPromo)
  *
  */
 router.post('/update/:id',UpdatePromo);
-
+router.post('/check/',CheckPromo);
 /**
  * @swagger
  * /Promo/disable/{id}:
