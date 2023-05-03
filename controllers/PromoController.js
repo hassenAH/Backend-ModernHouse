@@ -35,47 +35,38 @@ export async function addPromo(req , res){
   
 };
 
-export async function CheckPromo(req , res){
- 
+export async function CheckPromo(req, res) {
   try {
-     
-     var code  = req.body.code;
-     
-     const user = await User.findOne({ _id: req.body.idUser })
- 
- if(user) 
- {
-  var c = await Promo.findOne({ code: code });
-  var exist = false;
-  for(var usercheck of c.users)
-  {
-    var u = await User.findById(usercheck)
-    if(u)
-    { exist = true ;
-      res.status(500).json({message : "error code"});
-    }
-  }
-  if(!exist)
-  {
-    c.users.push(user._id)
-    c.quantity++;
-    await c.save()
+    const code = req.body.code;
+    const user = await User.findOne({ _id: req.body.idUser });
 
-    res.status(200).json({message : "ajout avec succeés",c});
+    if (user != null) {
+      const CodePromo = await Promo.findOne({ code: code });
+
+      if (CodePromo != null) {
+        const existe = CodePromo.users.some((element) => element.equals(user._id));
+
+        if (existe) {
+          return res.status(400).send({ message: "User already exists in the promo" });
+        } else {
+          CodePromo.users.push(user._id);
+          CodePromo.quantity++;
+          await CodePromo.save();
+
+          return res.status(200).send(CodePromo);
+        }
+      } else {
+        return res.status(400).send({ message: "Invalid promo code" });
+      }
+    } else {
+      return res.status(400).send({ message: "Invalid user ID" });
+    }
+  } catch (err) {
+    console.log(err);
+    return res.status(500).send({ message: "Internal server error" });
   }
- 
-  
- }
-     // Create user in our database
-     
-       
- 
-     
-   } catch (err) {
-     console.log(err);
-   }
-   
- };
+}
+
  
 
 export async function UpdatePromo(req,res){
