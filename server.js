@@ -14,6 +14,8 @@ import PaymentRoutes from './routes/PaymentRoutes.js';
 import RatingsRoute from './routes/RatingsRoute.js';
 import ReclamationRoute from './routes/ReclamationRoute.js';
 import PromoRoute from './routes/PromoRoute.js';
+import PositionRoutes from './routes/PositionRoute.js';
+
 const options ={
   definition: {
     openapi : '3.0.0',
@@ -74,7 +76,7 @@ app.use('/Ratings',RatingsRoute);
 app.use('/commande',cart);
 app.use('/produit',product);
 app.use('/wishlist',WishList);
-
+app.use('/position',PositionRoutes)
 app.use('/Reclam',ReclamationRoute);
 
 app.use('/livraison',Livraison);

@@ -381,7 +381,8 @@ export async function resetPass(req,res){
         company_name: req.body.company_name,
         code_fiscal: req.body.code_fiscal,
         telephone_number:  req.body.telephone_number,
-        categorie:  req.body.categorie
+        categorie:  req.body.categorie,
+        position : req.body.position
 
     })
     .then(docs=>{

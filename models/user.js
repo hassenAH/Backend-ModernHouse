@@ -56,6 +56,10 @@ const userSchema=new Schema(
         categorie:{
             type:String
         },
+        position:[{
+      lat: { type: String },
+      lng:{type:String},
+          }],
 
 
 

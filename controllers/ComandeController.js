@@ -2,6 +2,10 @@ import Product from"../models/Product.js";
 import Cart from "../models/Cart.js";
 import User from "../models/user.js";
 import moment from "moment/moment.js";
+import PDFDocument from "pdfkit";
+import nodemailer from "nodemailer"
+import fs from "fs"
+import path from "path"
 
 export async function addOnce (req, res){
   let date_ob = new Date()
@@ -274,6 +278,87 @@ export async function getProductSales(req, res) {
     return res.status(500).send('Server Error');
   }
 }
+const __dirname = path.dirname(new URL(import.meta.url).pathname);
+
+export async function generateAndSendCartPDF(req, res) {
+  const { userId } = req.body;
+  try {
+    const cart = await Cart.findOne({ user: userId })
+      .populate('user')
+      .populate('products')
+      .exec();
+
+    // Fetch the user and cart data
+    const user = await User.findById(userId);
+
+    // Create a new PDF document
+    const doc = new PDFDocument();
+
+    // Set the document title
+    doc.title = 'Commande';
+
+    // Write the user's name and email to the PDF
+    doc.text(`Nom: ${user.name}`);
+    doc.text(`Email: ${user.email}`);
+
+    // Write the cart items to the PDF
+    doc.text('Produits: ');
+    cart.products.forEach((product) => {
+      doc.text(`${product.name} - ${product.price}`);
+    });
+
+    // Calculate and write the total cost to the PDF
+    const totalCost = cart.products.reduce((total, product) => {
+      return total + product.price;
+    }, 0);
+    doc.text(`Total: ${totalCost}`);
+
+    // Save the PDF to a file
+    const pdfFilePath = path.join('public/images/c.pdf');
+    const writeStream = fs.createWriteStream(pdfFilePath);
+    doc.pipe(writeStream);
+
+    // Send the PDF as an email attachment
+    const transporter = nodemailer.createTransport({
+      service: 'gmail',
+      pool: true,
+      host: "smtp.gmail.com",
+      port: 587,
+      auth: {
+        user: "chebbiwissal512@gmail.com", // generated ethereal user
+        pass: "crwvbumzbfhmdyrz",
+      }
+    });
+
+    const mailOptions = {
+      from: 'chebbiwissal512@gmail.com',
+      to: user.email,
+      subject: 'Commande',
+      text: 'Commande PDF en pièce jointe.',
+      attachments: [
+        {
+          filename: 'commande.pdf',
+          path: pdfFilePath
+        }
+      ]
+    };
+
+    transporter.sendMail(mailOptions, (error, info) => {
+      if (error) {
+        console.log(error);
+        res.status(500).send('Une erreur est survenue lors de l\'envoi de l\'email.');
+      } else {
+        console.log('Email envoyé: ' + info.response);
+        res.send('Email envoyé avec succès.');
+      }
+    });
+
+  } catch (error) {
+    console.log(error);
+    res.status(500).send('Une erreur est survenue lors de la génération du PDF et/ou l\'envoi de l\'email.');
+  }
+}
+
 
 
 

@@ -4,7 +4,7 @@ import multer   from 'multer';
 import { addOnce, deleteone, getAll, DeletebyId,total,getbyid,changeEtat,getbyidcard,getShippingCarts
 
 
-, getShippedAndReturnedCarts ,getPackingCarts , CardsBymonth,getMaxProductSales,getProductSales,getAllcommanade}from "../controllers/ComandeController.js";
+, getShippedAndReturnedCarts,generateAndSendCartPDF ,getPackingCarts , CardsBymonth,getMaxProductSales,getProductSales,getAllcommanade}from "../controllers/ComandeController.js";
 
 
 
@@ -72,6 +72,11 @@ router.route("/deleteProduct")
   .post(
     getProductSales
   );
+  router.route("/generateAndSendCartPDF")
+  .post(
+    generateAndSendCartPDF
+  );
+  
   
   
   export default router;
