@@ -1,7 +1,7 @@
 import express from'express' ;
 import { checkSchema } from 'express-validator';
 
-import  {GetPromo,GetALLPromo,addPromo,UpdatePromo,deletePromo,disablePromo,CheckPromo} from"../controllers/PromoController.js" ;
+import  {GetPromo,GetALLPromo,addPromo,UpdatePromo,deletePromo,disablePromo,CheckPromo,getBestSellingPromos} from"../controllers/PromoController.js" ;
 
 
 
@@ -76,7 +76,10 @@ const router = express.Router();
  */
 router.post('/add',addPromo)
 
-
+router.route("/getBestSellingPromos")
+.post(
+    getBestSellingPromos
+);
 /**
  * @swagger
  * /Promo/update/{id}:

@@ -102,15 +102,21 @@ export async function login(req,res){
     {
         return res.status(404).send('Invalid email or password')
     }
-
-    const checkPassword = await bcrypt.compare(req.body.password, user.password);
+    else
+    {
+      const checkPassword = await bcrypt.compare(req.body.password, user.password);
     if(!checkPassword)
     {
         return res.status(404).send('Invalid email or password');
     }
+    const profile = await User.findOne({email: req.body.email}).select('-password');
+  
+    const token = jwt.sign({_id:profile._id}, 'privateKey')
+    res.header('x-auth-token',token).status(200).send(profile);
+    }
 
-    const token = jwt.sign({_id:user._id}, 'privateKey')
-    res.header('x-auth-token',token).status(200).send(user);
+   
+    
 
 }
 

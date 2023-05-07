@@ -68,7 +68,15 @@ export async function CheckPromo(req, res) {
 }
 
  
-
+export const getBestSellingPromos = async (req, res) => {
+  try {
+    const promo = await Promo.find({ user: req.body.user}).sort('-quantity').limit(10);
+    res.status(200).json(promo);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Server Error' });
+  }
+};
 export async function UpdatePromo(req,res){
 
   const  { code,description,expirationDate } = req.body;
