@@ -6,17 +6,14 @@ const ProductSchema = new Schema(
     description: { type: String },
     image: { type: String },
     price: {type : Number},
-    hor: {type : Number},
-    ver: { type: Number },
-    surf: { type: Number },
+    height: {type : Number},
+    width: { type: Number },
+    item: { type: Number },
+    depth: { type: Number },
     quantity: { type: Number },
     quantitySales: { type: Number },
-    
-    category : { type: String,
-      enum: {
-        values: ['seramic', 'flooring','electrical','kitchen','lighting','masonry','paints','walls'],
-        message: '{VALUE} is not supported'
-      } },
+    image3D: { type: String },
+    category : { type: String},
     user:[{ type: Schema.Types.ObjectId, ref: 'User' }],
   },
   

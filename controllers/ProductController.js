@@ -7,15 +7,16 @@ await  Product.create({
     productname: req.body.productname,
    /* image: `${req.file.filename}`,*/
       price: req.body.price,
-      hor: req.body.hor,
       quantitySales:0,
-      ver: req.body.ver,
-      surf: req.body.surf,
+      height: req.body.height,
+      width: req.body.width,
       quantity: req.body.quantity,
       category: req.body.category,
       description: req.body.description,
-      user: req.body.user
-
+      user: req.body.user,
+      depth: req.body.depth,
+      image3D: req.body.image3D,
+      item: req.body.item,
       
   })
     .then((newProduct) => {
@@ -24,13 +25,16 @@ await  Product.create({
         image: newProduct.image,
       price: newProduct.price,
       quantitySales:0,
-      hor: newProduct.hor,
-      ver: newProduct.ver,
-      surf: newProduct.surf,
+      depth: newProduct.depth,
+      height: newProduct.height,
+      width: newProduct.width,
       quantity: newProduct.quantity,
       category: newProduct.category,
       description: newProduct.description,
-      user: newProduct.user
+      user: newProduct.user,
+      image3D: newProduct.image3D,
+      item: newProduct.item,
+
       });
     })
     .catch((err) => {
@@ -55,28 +59,35 @@ export async function putOnce(req, res)
   if(req.file == undefined) {
     newProduct = {
       productname: req.body.productname,
+      image : req.body.image,
       price: req.body.price,
-      image: req.body.image,
-      hor: req.body.hor,
-      ver: req.body.ver,
-      surf: req.body.surf,
+      quantitySales:0,
+      height: req.body.height,
+      width: req.body.width,
       quantity: req.body.quantity,
       category: req.body.category,
-      description: req.body.description
+      description: req.body.description,
+      user: req.body.user,
+      depth: req.body.depth,
+      image3D: req.body.image3D,
+      item: req.body.item,
         }
   }
   else {
     newProduct = {
       productname: req.body.productname,
-      image:`${req.file.filename}`,
+      image: `${req.file.filename}`,
       price: req.body.price,
-      hor: req.body.hor,
-      ver: req.body.ver,
-      surf: req.body.surf,
+      quantitySales:0,
+      height: req.body.height,
+      width: req.body.width,
       quantity: req.body.quantity,
       category: req.body.category,
-      description: req.body.description
-
+      description: req.body.description,
+      user: req.body.user,
+      depth: req.body.depth,
+      image3D: req.body.image3D,
+      item: req.body.item,
       
     }
   }
