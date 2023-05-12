@@ -452,3 +452,40 @@ export async function month(req,res){
     await cursor.forEach(doc => {
       console.log(`Month ${doc._id}: ${doc.total_users} registered users`);
     }); */
+
+
+    export async function registerGoogle(req,res){
+   
+  
+     
+  
+      let user = await User.findOne({email: req.body.email})
+  
+      if(user)
+      {
+          return res.status(404).send(user)
+      }
+  
+      let username = req.body.last_name + " " + req.body.first_name;
+  
+      await User
+      .create({
+          username: username,
+          email: req.body.email,
+          role: "user",
+          Image:req.body.image,
+          verified: true,
+          banned:false,
+      })
+      .then(docs=>{
+          
+        
+          res.status(200).json(docs);
+      })
+      .catch(err=>{
+          res.status(500).json({error:err});
+      });
+      
+      
+  }
+  
