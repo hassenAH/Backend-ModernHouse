@@ -16,7 +16,7 @@ export async function addOnce (req, res){
           return res.status(404).json({ message: 'Product not found' });
         }
     
-        const cart = await Cart.findOne({user: [user._id]});
+        const cart = await Cart.findOne({user: [user._id],paid: false});
         if (!cart) {
           const newCart = new Cart({
             user: [user._id],
@@ -142,7 +142,7 @@ export async function DeletebyId (req, res) {
 }
 export async function getbyid (req, res) {
   try {
-    const cart = await Cart.findOne({ user: req.body.idUser  }).populate("user").populate('products');
+    const cart = await Cart.find({ user: req.body.idUser  }).populate("user").populate('products');
     res.status(200).json(cart);
   } catch (err) {
     res.status(500).json({ error: err });

@@ -1,5 +1,7 @@
 import Stripe from 'stripe';
 import fetch from "cross-fetch";
+import Cart from "../models/Cart.js";
+import User from "../models/user.js";
 const stripePublishableKey = process.env.STRIPE_PUBLISHABLE_KEY || '1';
 const stripeSecretKey = process.env.STRIPE_SECRET_KEY || '2';
 const stripeWebhookSecret = process.env.STRIPE_WEBHOOK_SECRET || '3';
@@ -34,7 +36,11 @@ export async function Pay(req , res){
     const data = await response.json();
     console.log(data);
     res.status(200).json({message : "payment avec succeés",data});
-
+    const user = await User.findOne({ email: req.body.email })
+    const cart = await Cart.findOne({user: [user._id]});
+    cart.paid= true;
+    await cart.save();
+    //'645dfd3efa2bd304a5e34616:oJBdeDtxlow7PB4Jx8xk52eytoYz0GP'
 }
 
 export async function webhook(req, res){
