@@ -16,7 +16,7 @@ export async function addOnce (req, res){
           return res.status(404).json({ message: 'Product not found' });
         }
     
-        const cart = await Cart.findOne({user: [user._id]});
+        const cart = await Cart.findOne({user: [user._id],paid:false});
         if (!cart) {
           const newCart = new Cart({
             user: [user._id],
